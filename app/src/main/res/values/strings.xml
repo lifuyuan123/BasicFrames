@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BasicFrames</string>
+
+
+    <!--底部菜单 start-->
+    <string-array name="buttom_array">
+        <item>福利</item>
+        <item>Android</item>
+        <item>ios</item>
+        <item>Vedio</item>
+    </string-array>
+    <!--底部菜单 end-->
+</resources>

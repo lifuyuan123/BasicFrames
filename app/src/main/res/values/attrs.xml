@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--加载 错误  空  布局-->
+    <declare-styleable name="EmptyLayout">
+        <attr name="elEmptyLayout"  format="reference"/>
+        <attr name="elErrorLayout"  format="reference"/>
+        <attr name="elLoadingLayout"  format="reference"/>
+    </declare-styleable>
+</resources>
