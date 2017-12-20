@@ -1,5 +1,6 @@
 package com.example.lfy.basicframes.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -9,6 +10,8 @@ import android.widget.ProgressBar;
 
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.ui.base.BaseActivity;
+import com.example.lfy.basicframes.utill.StatusBarUtils;
+import com.example.lfy.basicframes.view.TitleBar;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -29,6 +32,8 @@ public class WEBActivity extends BaseActivity {
     Toolbar toolbarWeb;
     @BindView(R.id.progress)
     ProgressBar progress;
+    @BindView(R.id.title_bar)
+    TitleBar titleBar;
     private String url;
 
     @Override
@@ -36,10 +41,10 @@ public class WEBActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         ButterKnife.bind(this);
+        //状态栏相关
+        StatusBarUtils.setColorNoTranslucent(this,Color.parseColor("#9aeaba"));
         setSupportActionBar(toolbarWeb);
-        getSupportActionBar().setTitle("web");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarWeb.setNavigationOnClickListener(new View.OnClickListener() {
+        titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -98,7 +103,7 @@ public class WEBActivity extends BaseActivity {
             } else {
                 if (progress.getVisibility() == GONE)
                     progress.setVisibility(VISIBLE);
-                    progress.setProgress(newProgress);
+                progress.setProgress(newProgress);
             }
             super.onProgressChanged(view, newProgress);
         }
@@ -108,11 +113,11 @@ public class WEBActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (keyCode==KeyEvent.KEYCODE_BACK){
-            if (webview.canGoBack()){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (webview.canGoBack()) {
                 webview.goBack();
                 return true;
-            }else {
+            } else {
                 finish();
                 return true;
             }

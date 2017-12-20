@@ -6,4 +6,17 @@
         <attr name="elErrorLayout"  format="reference"/>
         <attr name="elLoadingLayout"  format="reference"/>
     </declare-styleable>
+
+    <!--Titlebar-->
+    <declare-styleable name="TitleBar">
+        <attr name="titleBarTitle" format="string"/>
+        <attr name="titleBarRightTitle" format="string"/>
+        <attr name="titleBarLeftTitle" format="string"/>
+        <attr name="titleBarLeftImage" format="reference"/>
+        <attr name="titleBarRightImage" format="reference"/>
+        <attr name="titleBarBackground" format="reference|color"/>
+        <attr name="titleBarTitleColor" format="reference|color"/>
+        <attr name="titleBarShowLine" format="boolean"/>
+        <attr name="titleBarTitleSize" format="dimension"/>
+    </declare-styleable>
 </resources>

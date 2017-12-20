@@ -7,7 +7,17 @@
     android:orientation="vertical"
     tools:context="com.example.lfy.basicframes.ui.activity.WEBActivity">
 
+    <com.example.lfy.basicframes.view.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleBarBackground="#9aeaba"
+        app:titleBarTitleColor="@color/colorBack"
+        app:titleBarLeftImage="@drawable/im_back"
+        app:titleBarTitle="web"
+        />
     <android.support.v7.widget.Toolbar
+        android:visibility="gone"
         android:id="@+id/toolbar_web"
         android:background="#9aeaba"
         android:layout_width="match_parent"

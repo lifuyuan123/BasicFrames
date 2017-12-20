@@ -8,14 +8,12 @@
     android:orientation="vertical"
     tools:context="com.example.lfy.basicframes.ui.activity.MainActivity">
 
-
-    <!--<include layout="@layout/left_menu"/>-->
-    <!--<include layout="@layout/layout_content"/>-->
-    <android.support.v7.widget.Toolbar
-        android:background="#aa3e6456"
-        android:id="@+id/toolbar_main"
+    <com.example.lfy.basicframes.view.TitleBar
+        app:titleBarTitle="main"
+        app:titleBarBackground="#aa3e6456"
+        android:id="@+id/title_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+        android:layout_height="wrap_content"/>
 
 
     <FrameLayout

@@ -1,11 +1,11 @@
 package com.example.lfy.basicframes.ui.activity;
 
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import android.widget.Toast;
 
 import com.example.lfy.basicframes.R;
@@ -23,20 +22,21 @@ import com.example.lfy.basicframes.ui.fragment.AndroidFragment;
 import com.example.lfy.basicframes.ui.fragment.IosFragment;
 import com.example.lfy.basicframes.ui.fragment.VideoFragment;
 import com.example.lfy.basicframes.ui.fragment.WelfareFragment;
-import com.example.lfy.basicframes.utill.StatusBarUtil;
-
+import com.example.lfy.basicframes.utill.StatusBarUtils;
+import com.example.lfy.basicframes.utill.ToastUtils;
+import com.example.lfy.basicframes.view.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar_main)
-    Toolbar toolbarMain;
     @BindView(R.id.frame_main)
     FrameLayout frameMain;
     @BindView(R.id.rg_main)
     RadioGroup rgMain;
+    @BindView(R.id.title_bar_main)
+    TitleBar titleBarMain;
 
 
     private FragmentTransaction transaction;
@@ -57,22 +57,16 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-
-        setSupportActionBar(toolbarMain);
-        getSupportActionBar().setTitle("main");
-
-        toolbarMain.setNavigationIcon(R.drawable.menu);
-        toolbarMain.setNavigationOnClickListener(new View.OnClickListener() {
+        titleBarMain.setLeftImageResource(R.drawable.menu);
+        titleBarMain.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ToastUtils.showShort("目录");
             }
         });
 
         //状态栏相关
-        StatusBarUtil.darkMode(this);
-        StatusBarUtil.setPaddingSmart(this, toolbarMain);
+        StatusBarUtils.setColorNoTranslucent(this, Color.parseColor("#aa3e6456"));
 
         rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -145,7 +139,6 @@ public class MainActivity extends BaseActivity {
         }
         return true;
     }
-
 
 
 }
