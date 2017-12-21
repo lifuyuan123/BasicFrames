@@ -19,6 +19,7 @@ import com.example.lfy.basicframes.entity.IosBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
 import com.example.lfy.basicframes.ui.activity.WEBActivity;
 import com.example.lfy.basicframes.ui.base.BaseFragment;
+import com.example.lfy.basicframes.view.EmptyLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -45,19 +46,32 @@ public class IosFragment extends BaseFragment {
     RecyclerView rvIos;
     @BindView(R.id.fresh_ios)
     SmartRefreshLayout freshIos;
+    @BindView(R.id.empty_layout_iod)
+    EmptyLayout emptyLayoutIod;
 
     private LinearLayoutManager manager = new LinearLayoutManager(getContext());
     private CommonAdapter<IosBean.ResultsBean> adapter;
     private List<IosBean.ResultsBean> list = new ArrayList<>();
     private HeaderAndFooterWrapper headerAndFooterWrapper;//头尾布局适配器 传入我们的adapter
     private View footView;
-    int page=1;
+    int page = 1;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvIos.setLayoutManager(manager);
-        
+
+
+        emptyLayoutIod.bindView(rvIos);
+        emptyLayoutIod.setOnButtonClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                freshIos.autoRefresh();
+                page=1;
+                getData(page);
+            }
+        });
+
         freshIos.setEnableAutoLoadmore(true);
         freshIos.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
@@ -65,7 +79,7 @@ public class IosFragment extends BaseFragment {
                 page++;
                 getData(page);
                 refreshlayout.finishLoadmore();
-                if(adapter.getItemCount()>50){
+                if (adapter.getItemCount() > 50) {
                     Toast.makeText(getContext(), "全部加载完成", Toast.LENGTH_SHORT).show();
                     footView.setVisibility(View.VISIBLE);
                     refreshlayout.setLoadmoreFinished(true);
@@ -74,14 +88,14 @@ public class IosFragment extends BaseFragment {
 
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                page=1;
+                page = 1;
                 getData(page);
                 refreshlayout.finishRefresh();
                 footView.setVisibility(View.GONE);
                 refreshlayout.setLoadmoreFinished(false);
             }
         });
-        
+
         adapter = new CommonAdapter<IosBean.ResultsBean>(list, R.layout.ios_item) {
             @Override
             protected void bindViewItemData(ViewDataBinding binding, int position, final IosBean.ResultsBean iosBean) {
@@ -98,30 +112,33 @@ public class IosFragment extends BaseFragment {
             }
         };
         getData(page);
-        footView= LayoutInflater.from(getContext()).inflate(R.layout.foot_view,null);
+        footView = LayoutInflater.from(getContext()).inflate(R.layout.foot_view, null);
         footView.setVisibility(View.GONE);
-        headerAndFooterWrapper =new HeaderAndFooterWrapper(adapter);//将适配器传入
+        headerAndFooterWrapper = new HeaderAndFooterWrapper(adapter);//将适配器传入
         headerAndFooterWrapper.addFootView(footView);
         rvIos.setAdapter(headerAndFooterWrapper);
         freshIos.autoRefresh();
     }
 
     private void getData(final int page) {
-        subscriber.getGankiOS("10", page+"", "iOS", new ApiCallBack<IosBean>() {
+        emptyLayoutIod.showLoading();
+        subscriber.getGankiOS("10", page + "", "iOS", new ApiCallBack<IosBean>() {
             @Override
             public void OnSuccess(IosBean value) {
                 Log.e("ios", value.toString());
-                if (page==1){
+                if (page == 1) {
                     list.clear();
                 }
                 list.addAll(value.getResults());
                 headerAndFooterWrapper.notifyDataSetChanged();
+                emptyLayoutIod.showSuccess();
             }
 
             @Override
             public void OnError(String msg) {
-                if (msg!=null)
-                Log.e("iosOnError", msg.toString());
+                if (msg != null)
+                    Log.e("iosOnError", msg.toString());
+                emptyLayoutIod.showError();
             }
 
             @Override
@@ -136,5 +153,6 @@ public class IosFragment extends BaseFragment {
         return R.layout.fragment_ios;
     }
 
-    
+
+
 }

@@ -1,11 +1,15 @@
 package com.example.lfy.basicframes.ui.activity;
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -22,14 +26,18 @@ import com.example.lfy.basicframes.ui.fragment.AndroidFragment;
 import com.example.lfy.basicframes.ui.fragment.IosFragment;
 import com.example.lfy.basicframes.ui.fragment.VideoFragment;
 import com.example.lfy.basicframes.ui.fragment.WelfareFragment;
+import com.example.lfy.basicframes.utill.EasyPermissionsEx;
+import com.example.lfy.basicframes.utill.StatusBarUtil;
 import com.example.lfy.basicframes.utill.StatusBarUtils;
 import com.example.lfy.basicframes.utill.ToastUtils;
 import com.example.lfy.basicframes.view.TitleBar;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements EasyPermissionsEx.PermissionCallbacks {
 
     @BindView(R.id.frame_main)
     FrameLayout frameMain;
@@ -61,7 +69,21 @@ public class MainActivity extends BaseActivity {
         titleBarMain.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showShort("目录");
+                startActivity(new Intent(MainActivity.this,MenuActivity.class));
+            }
+        });
+
+        titleBarMain.setRightImageResource(R.drawable.menu);
+        titleBarMain.setRightLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (EasyPermissionsEx.hasPermissions(MainActivity.this, Manifest.permission.CALL_PHONE)) {
+                    //已经授权
+                    Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + 1008611));
+                    startActivity(intent);
+                }else {
+                    EasyPermissionsEx.requestPermissions(MainActivity.this,"拨打电话需要授予拨号权限", 100,Manifest.permission.CALL_PHONE);
+                }
             }
         });
 
@@ -141,4 +163,29 @@ public class MainActivity extends BaseActivity {
     }
 
 
+
+    //实现了申请权限的回调
+    //同意权限
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        if(requestCode==100){
+            Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + 1008611));
+            startActivity(intent);
+        }
+    }
+
+    //拒绝权限
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+    ToastUtils.showShort("拒绝");
+    }
+
+    /**
+     *是否支持滑动返回。这里在父类中默认返回 true 来支持滑动返回，
+     如果某个界面不想支持滑动返回则重写该方法返回 false 即可
+     */
+    @Override
+    public boolean isSupportSwipeBack() {
+        return false;
+    }
 }

@@ -41,8 +41,12 @@ public class WEBActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         ButterKnife.bind(this);
+
         //状态栏相关
         StatusBarUtils.setColorNoTranslucent(this,Color.parseColor("#9aeaba"));
+//        //状态栏一起拉动  但是湛底的activity状态栏不能是透明的   否则滑动过程中是透明色 完成滑动后会恢复
+//        StatusBarUtils.setColorForSwipeBack(this,Color.parseColor("#9aeaba"),0);
+
         setSupportActionBar(toolbarWeb);
         titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override

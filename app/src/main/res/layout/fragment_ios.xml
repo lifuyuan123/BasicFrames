@@ -14,10 +14,20 @@
             app:shhLineWidth="2dp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y45" />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_ios"
+        <com.example.lfy.basicframes.view.EmptyLayout
+            android:id="@+id/empty_layout_iod"
+            app:elEmptyLayout="@layout/layout_empty"
+            app:elErrorLayout="@layout/layout_error"
+            app:elLoadingLayout="@layout/layout_loading"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_ios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.example.lfy.basicframes.view.EmptyLayout>
+
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             app:srlPrimaryColor="#333333"
             android:layout_width="match_parent"

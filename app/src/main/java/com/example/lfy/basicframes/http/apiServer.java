@@ -1,6 +1,7 @@
 package com.example.lfy.basicframes.http;
 
 import com.example.lfy.basicframes.entity.AndroidBean;
+import com.example.lfy.basicframes.entity.BannerModel;
 import com.example.lfy.basicframes.entity.GankBean;
 import com.example.lfy.basicframes.entity.IosBean;
 import com.example.lfy.basicframes.entity.RestBean;
@@ -42,5 +43,8 @@ public interface apiServer {
     @GET("/api/data/{fuli}/{count}/{page}")
     Observable<RestBean> getGankRest(@Path("count") String count, @Path("page") String page, @Path(value="fuli")String type);
 
+    //获取banner
+    @GET("{itemCount}item.json")
+    Observable<BannerModel> getBanner(@Path("itemCount") int count);
 
 }

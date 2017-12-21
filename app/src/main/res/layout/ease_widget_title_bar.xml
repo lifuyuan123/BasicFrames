@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="#ffffff"
-        android:textSize="20sp" />
+        android:textSize="@dimen/x20" />
 
     <LinearLayout
         android:id="@+id/right_layout"

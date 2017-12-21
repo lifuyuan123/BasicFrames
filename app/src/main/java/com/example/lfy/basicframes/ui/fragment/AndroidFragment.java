@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.lfy.basicframes.R;
@@ -20,6 +19,7 @@ import com.example.lfy.basicframes.entity.AndroidBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
 import com.example.lfy.basicframes.ui.activity.WEBActivity;
 import com.example.lfy.basicframes.ui.base.BaseFragment;
+import com.example.lfy.basicframes.view.EmptyLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
@@ -48,6 +48,8 @@ public class AndroidFragment extends BaseFragment {
     SmartRefreshLayout freshAndroid;
     @BindView(R.id.foot_android)
     BallPulseFooter footAndroid;
+    @BindView(R.id.empty_layout_android)
+    EmptyLayout emptyLayoutAndroid;
     private LinearLayoutManager manager = new LinearLayoutManager(getContext());
     private List<AndroidBean.ResultsBean> list = new ArrayList<>();
     private CommonAdapter<AndroidBean.ResultsBean> adapter;
@@ -85,6 +87,19 @@ public class AndroidFragment extends BaseFragment {
             }
         });
 
+        //绑定要隐藏的view
+        emptyLayoutAndroid.bindView(rvAndroid);
+        emptyLayoutAndroid.setOnButtonClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //刷新的动画
+                freshAndroid.autoRefresh();
+                page=1;
+                getData(page);
+
+            }
+        });
+
 
         adapter = new CommonAdapter<AndroidBean.ResultsBean>(list, R.layout.android_item) {
             @Override
@@ -104,9 +119,9 @@ public class AndroidFragment extends BaseFragment {
 
         getData(page);
 
-        footView= LayoutInflater.from(getContext()).inflate(R.layout.foot_view,null);
+        footView = LayoutInflater.from(getContext()).inflate(R.layout.foot_view, null);
         footView.setVisibility(View.GONE);
-        headerAndFooterWrapper =new HeaderAndFooterWrapper(adapter);//将适配器传入
+        headerAndFooterWrapper = new HeaderAndFooterWrapper(adapter);//将适配器传入
         headerAndFooterWrapper.addFootView(footView);
         rvAndroid.setAdapter(headerAndFooterWrapper);
         freshAndroid.autoRefresh();
@@ -123,12 +138,14 @@ public class AndroidFragment extends BaseFragment {
                 }
                 list.addAll(value.getResults());
                 headerAndFooterWrapper.notifyDataSetChanged();//注意这里的刷新的adapter也需要用headerAndFooterWrapper
+                emptyLayoutAndroid.showSuccess();
             }
 
             @Override
             public void OnError(String msg) {
                 if (msg != null)
                     Log.e("androidOnError", msg.toString());
+                emptyLayoutAndroid.showError();
             }
 
             @Override

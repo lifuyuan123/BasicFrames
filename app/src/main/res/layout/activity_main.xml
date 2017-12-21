@@ -13,7 +13,8 @@
         app:titleBarBackground="#aa3e6456"
         android:id="@+id/title_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+    </com.example.lfy.basicframes.view.TitleBar>
 
 
     <FrameLayout

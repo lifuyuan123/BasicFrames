@@ -7,10 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".application.MyApplication"
@@ -19,14 +19,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        android:theme="@style/MyTheme">
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:theme="@style/MyTheme" />
 
         <!-- 百分比布局适配设计稿 -->
         <meta-data
@@ -52,7 +48,19 @@
         <activity
             android:name=".ui.activity.VedioActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
-        <activity android:name=".ui.activity.ImagePagerActivity"></activity>
+        <activity android:name=".ui.activity.ImagePagerActivity" />
+        <activity android:name=".ui.activity.SwipeDeleteActivity" />
+        <activity
+            android:name=".ui.activity.GuideActivity"
+            android:theme="@style/AppTheme.guide">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.BannerActivity" />
+        <activity android:name=".ui.activity.MenuActivity"></activity>
     </application>
 
 </manifest>

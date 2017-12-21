@@ -8,7 +8,7 @@ import android.util.Log;
  * */
 
 public class LogUtil {
-    public static String tagPrefix = "";  
+    public static String tagPrefix = "logUtil";
     public static boolean showV = true;  
     public static boolean showD = true;  
     public static boolean showI = true;  
@@ -32,7 +32,7 @@ public class LogUtil {
     }
 
     //打开或关闭日志
-    private static void closeOrOpenAll(boolean isOpen){
+    public static void closeOrOpenAll(boolean isOpen){
         showV=isOpen;
         showD=isOpen;
         showI=isOpen;

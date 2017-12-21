@@ -109,8 +109,8 @@ public class WelfareFragment extends BaseFragment {
                 page++;
                 getData(page);
                 refreshlayout.finishLoadmore();
-                if (adapter.getItemCount() > 100) {
-                    Toast.makeText(getContext(), "数据加载完毕", Toast.LENGTH_SHORT).show();
+                if (adapter.getItemCount() > 500) {
+                    ToastUtils.showShort("数据加载完毕");
                     refreshlayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
                 }
             }
@@ -118,6 +118,8 @@ public class WelfareFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 page = 1;
+                //显示加载中
+                emptyLayout.showLoading();
                 getData(page);
                 refreshlayout.setLoadmoreFinished(false);//再次触发加载更多事件
                 refreshlayout.finishRefresh();
@@ -149,8 +151,6 @@ public class WelfareFragment extends BaseFragment {
     }
 
     private void getData(final int page) {
-        //显示加载中
-        emptyLayout.showLoading();
 
         subscriber.getGank(10 + "", page + "", "福利", new ApiCallBack<GankBean>() {
             @Override
@@ -170,6 +170,7 @@ public class WelfareFragment extends BaseFragment {
             public void OnError(String msg) {
                 //加载错误
                 emptyLayout.showError();
+                if (msg!=null)
                 Log.e("getDataOnError", msg.toString());
             }
 

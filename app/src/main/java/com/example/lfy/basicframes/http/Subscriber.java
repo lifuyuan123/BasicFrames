@@ -1,6 +1,7 @@
 package com.example.lfy.basicframes.http;
 
 import com.example.lfy.basicframes.entity.AndroidBean;
+import com.example.lfy.basicframes.entity.BannerModel;
 import com.example.lfy.basicframes.entity.GankBean;
 import com.example.lfy.basicframes.entity.IosBean;
 import com.example.lfy.basicframes.entity.RestBean;
@@ -61,6 +62,7 @@ public class Subscriber extends ObjectLoad{
         //完成一次消息订阅
         observe( apiserver.getGankRest(cout,page,type)).subscribe(callBack );//订阅
     }
+
 
 
 }

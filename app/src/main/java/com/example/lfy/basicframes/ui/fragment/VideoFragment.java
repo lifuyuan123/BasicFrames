@@ -20,6 +20,7 @@ import com.example.lfy.basicframes.entity.RestBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
 import com.example.lfy.basicframes.ui.activity.WEBActivity;
 import com.example.lfy.basicframes.ui.base.BaseFragment;
+import com.example.lfy.basicframes.view.EmptyLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
@@ -49,6 +50,8 @@ public class VideoFragment extends BaseFragment {
     SmartRefreshLayout freshVedio;
     @BindView(R.id.foot_vedio)
     BallPulseFooter footVedio;
+    @BindView(R.id.empty_layout_vedio)
+    EmptyLayout emptyLayoutVedio;
 
     private LinearLayoutManager manager = new LinearLayoutManager(getContext());
     private List<RestBean.ResultsBean> list = new ArrayList<>();
@@ -79,6 +82,17 @@ public class VideoFragment extends BaseFragment {
                 page = 1;
                 getData(page);
                 refreshlayout.finishRefresh();
+            }
+        });
+
+
+        emptyLayoutVedio.bindView(rvVedio);
+        emptyLayoutVedio.setOnButtonClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                freshVedio.autoRefresh();
+                page=1;
+                getData(page);
             }
         });
 
@@ -124,11 +138,14 @@ public class VideoFragment extends BaseFragment {
                 }
                 list.addAll(value.getResults());
                 adapter.notifyDataSetChanged();
+                emptyLayoutVedio.showSuccess();
             }
 
             @Override
             public void OnError(String msg) {
+                if (msg!=null)
                 Log.e("restOnError", msg.toString());
+                emptyLayoutVedio.showError();
             }
 
             @Override
@@ -142,7 +159,5 @@ public class VideoFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_vedio;
     }
-
-
 
 }
