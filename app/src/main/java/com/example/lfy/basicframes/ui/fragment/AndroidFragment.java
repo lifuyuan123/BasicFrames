@@ -1,24 +1,30 @@
 package com.example.lfy.basicframes.ui.fragment;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.adapter.CommonAdapter;
 import com.example.lfy.basicframes.databinding.AndroidItemBinding;
+import com.example.lfy.basicframes.databinding.FragmentAndroidBinding;
 import com.example.lfy.basicframes.entity.AndroidBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
+import com.example.lfy.basicframes.http.Subscriber;
 import com.example.lfy.basicframes.ui.activity.WEBActivity;
 import com.example.lfy.basicframes.ui.base.BaseFragment;
+import com.example.lfy.basicframes.utill.LogUtil;
 import com.example.lfy.basicframes.view.EmptyLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -29,10 +35,6 @@ import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * author:ggband
  * data:2017/12/14 00149:26
@@ -40,31 +42,32 @@ import butterknife.Unbinder;
  * desc:
  */
 
-public class AndroidFragment extends BaseFragment {
-
-    @BindView(R.id.rv_android)
-    RecyclerView rvAndroid;
-    @BindView(R.id.fresh_android)
-    SmartRefreshLayout freshAndroid;
-    @BindView(R.id.foot_android)
-    BallPulseFooter footAndroid;
-    @BindView(R.id.empty_layout_android)
-    EmptyLayout emptyLayoutAndroid;
-    private LinearLayoutManager manager = new LinearLayoutManager(getContext());
+public class AndroidFragment extends Fragment {
+    protected Subscriber subscriber;
+    private LinearLayoutManager manager;
     private List<AndroidBean.ResultsBean> list = new ArrayList<>();
     private CommonAdapter<AndroidBean.ResultsBean> adapter;
     private int page = 1;
     private HeaderAndFooterWrapper headerAndFooterWrapper;//头尾布局适配器 传入我们的adapter
     private View footView;
+    private FragmentAndroidBinding inflate;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        inflate = DataBindingUtil.inflate(inflater, R.layout.fragment_android, container, false);
+        return inflate.getRoot();
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvAndroid.setLayoutManager(manager);
-        footAndroid.setAnimatingColor(Color.parseColor("#ffffff"));//设置footview颜色
-        footAndroid.setBackgroundColor(Color.parseColor("#2196F3"));
-        freshAndroid.setEnableAutoLoadmore(true);
-        freshAndroid.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+        subscriber= Subscriber.getInstemce();
+        inflate.footAndroid.setAnimatingColor(Color.parseColor("#ffffff"));//设置footview颜色
+        inflate.footAndroid.setBackgroundColor(Color.parseColor("#2196F3"));
+        inflate.freshAndroid.setEnableAutoLoadmore(true);
+        inflate.freshAndroid.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 page++;
@@ -88,12 +91,12 @@ public class AndroidFragment extends BaseFragment {
         });
 
         //绑定要隐藏的view
-        emptyLayoutAndroid.bindView(rvAndroid);
-        emptyLayoutAndroid.setOnButtonClick(new View.OnClickListener() {
+        inflate.emptyLayoutAndroid.bindView(inflate.rvAndroid);
+        inflate.emptyLayoutAndroid.setOnButtonClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //刷新的动画
-                freshAndroid.autoRefresh();
+                inflate.freshAndroid.autoRefresh();
                 page=1;
                 getData(page);
 
@@ -123,8 +126,10 @@ public class AndroidFragment extends BaseFragment {
         footView.setVisibility(View.GONE);
         headerAndFooterWrapper = new HeaderAndFooterWrapper(adapter);//将适配器传入
         headerAndFooterWrapper.addFootView(footView);
-        rvAndroid.setAdapter(headerAndFooterWrapper);
-        freshAndroid.autoRefresh();
+        manager = new LinearLayoutManager(getContext());
+        inflate.rvAndroid.setLayoutManager(manager);
+        inflate.rvAndroid.setAdapter(headerAndFooterWrapper);
+        inflate.freshAndroid.autoRefresh();
     }
 
 
@@ -138,14 +143,14 @@ public class AndroidFragment extends BaseFragment {
                 }
                 list.addAll(value.getResults());
                 headerAndFooterWrapper.notifyDataSetChanged();//注意这里的刷新的adapter也需要用headerAndFooterWrapper
-                emptyLayoutAndroid.showSuccess();
+                inflate.emptyLayoutAndroid.showSuccess();
             }
 
             @Override
             public void OnError(String msg) {
                 if (msg != null)
                     Log.e("androidOnError", msg.toString());
-                emptyLayoutAndroid.showError();
+                inflate.emptyLayoutAndroid.showError();
             }
 
             @Override
@@ -155,9 +160,11 @@ public class AndroidFragment extends BaseFragment {
         });
     }
 
+
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_android;
+    public void onDestroyView() {
+        super.onDestroyView();
+        LogUtil.e("android  销毁");
     }
 
 }

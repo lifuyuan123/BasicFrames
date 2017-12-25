@@ -2,14 +2,18 @@ package com.example.lfy.basicframes.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -21,33 +25,23 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.lfy.basicframes.R;
+import com.example.lfy.basicframes.databinding.ActivityMainBinding;
 import com.example.lfy.basicframes.ui.base.BaseActivity;
 import com.example.lfy.basicframes.ui.fragment.AndroidFragment;
 import com.example.lfy.basicframes.ui.fragment.IosFragment;
 import com.example.lfy.basicframes.ui.fragment.VideoFragment;
 import com.example.lfy.basicframes.ui.fragment.WelfareFragment;
 import com.example.lfy.basicframes.utill.EasyPermissionsEx;
-import com.example.lfy.basicframes.utill.StatusBarUtil;
 import com.example.lfy.basicframes.utill.StatusBarUtils;
 import com.example.lfy.basicframes.utill.ToastUtils;
-import com.example.lfy.basicframes.view.TitleBar;
 
-import java.util.List;
+public class MainActivity extends BaseActivity {
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class MainActivity extends BaseActivity implements EasyPermissionsEx.PermissionCallbacks {
-
-    @BindView(R.id.frame_main)
-    FrameLayout frameMain;
-    @BindView(R.id.rg_main)
-    RadioGroup rgMain;
-    @BindView(R.id.title_bar_main)
-    TitleBar titleBarMain;
-
-
+//    @BindView(R.id.viewpager)
+//    ViewPager viewpager;
+//    private MyPagerAdapter adapter;
     private FragmentTransaction transaction;
+    private FragmentManager fragmentManager;
     private Fragment fragment;
     private String[] array;
     private int lastId;
@@ -58,43 +52,39 @@ public class MainActivity extends BaseActivity implements EasyPermissionsEx.Perm
     private long firstTime;//第一次点击
     private long secondTime;//第二次点击
     private long spaceTime;//两次时间差
+    private ActivityMainBinding mainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-
-        titleBarMain.setLeftImageResource(R.drawable.menu);
-        titleBarMain.setLeftLayoutClickListener(new View.OnClickListener() {
+        mainBinding=DataBindingUtil.setContentView(this,R.layout.activity_main);
+        //获取fragment管理类
+        fragmentManager=getSupportFragmentManager();
+        mainBinding.titleBarMain.setLeftImageResource(R.drawable.menu);
+        mainBinding.titleBarMain.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,MenuActivity.class));
+                startActivity(new Intent(MainActivity.this, MenuActivity.class));
             }
         });
 
-        titleBarMain.setRightImageResource(R.drawable.menu);
-        titleBarMain.setRightLayoutClickListener(new View.OnClickListener() {
+        mainBinding.titleBarMain.setRightImageResource(R.drawable.menu);
+        mainBinding.titleBarMain.setRightLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (EasyPermissionsEx.hasPermissions(MainActivity.this, Manifest.permission.CALL_PHONE)) {
-                    //已经授权
-                    Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + 1008611));
-                    startActivity(intent);
-                }else {
-                    EasyPermissionsEx.requestPermissions(MainActivity.this,"拨打电话需要授予拨号权限", 100,Manifest.permission.CALL_PHONE);
-                }
+               ToastUtils.showShort("点击了右边");
             }
         });
 
         //状态栏相关
         StatusBarUtils.setColorNoTranslucent(this, Color.parseColor("#aa3e6456"));
 
-        rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mainBinding.rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
-                transaction = getSupportFragmentManager().beginTransaction();
-                fragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(id));
+                transaction = fragmentManager.beginTransaction();
+                fragment = fragmentManager.findFragmentByTag(String.valueOf(id));
+//                viewpager.setCurrentItem(id);
                 //标记最后一个点击的fragment
                 Fragment lastFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(lastId));
                 //不为空才能隐藏  隐藏上一次的fragment
@@ -118,6 +108,20 @@ public class MainActivity extends BaseActivity implements EasyPermissionsEx.Perm
         //添加fragment和radiobutton
         initView();
 
+//        adapter = new MyPagerAdapter(getSupportFragmentManager());
+//        viewpager.setAdapter(adapter);
+//        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            public void onPageSelected(int position) {
+//                rgMain.getChildAt(position).performClick();
+//            }
+//            public void onPageScrolled(int arg0, float arg1, int arg2) {
+//
+//            }
+//            public void onPageScrollStateChanged(int arg0) {
+//
+//            }
+//        });
+
     }
 
     //初始化radioButton
@@ -137,14 +141,14 @@ public class MainActivity extends BaseActivity implements EasyPermissionsEx.Perm
             button.setButtonDrawable(new BitmapDrawable());
             button.setBackgroundDrawable(null);
             button.setText(array[i]);
-            button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
             button.setGravity(Gravity.CENTER);
             button.setLayoutParams(params);
             button.setTextColor(getResources().getColorStateList(R.color.buttom_color_selector));
-            rgMain.addView(button);
+            mainBinding.rgMain.addView(button);
         }
         //设置为选中《福利》
-        rgMain.getChildAt(0).performClick();
+        mainBinding.rgMain.getChildAt(0).performClick();
 
     }
 
@@ -162,30 +166,31 @@ public class MainActivity extends BaseActivity implements EasyPermissionsEx.Perm
         return true;
     }
 
-
-
-    //实现了申请权限的回调
-    //同意权限
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-        if(requestCode==100){
-            Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + 1008611));
-            startActivity(intent);
-        }
-    }
-
-    //拒绝权限
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-    ToastUtils.showShort("拒绝");
-    }
-
     /**
-     *是否支持滑动返回。这里在父类中默认返回 true 来支持滑动返回，
-     如果某个界面不想支持滑动返回则重写该方法返回 false 即可
+     * 是否支持滑动返回。这里在父类中默认返回 true 来支持滑动返回，
+     * 如果某个界面不想支持滑动返回则重写该方法返回 false 即可
      */
     @Override
     public boolean isSupportSwipeBack() {
         return false;
     }
+
+
+//    class MyPagerAdapter extends FragmentPagerAdapter {
+//
+//        public MyPagerAdapter(FragmentManager fm) {
+//            super(fm);
+//        }
+//
+//        public Fragment getItem(int arg0) {
+//            return fragments[arg0];
+//        }
+//
+//        public int getCount() {
+//            return fragments.length;
+//        }
+//    }
+
+
+
 }

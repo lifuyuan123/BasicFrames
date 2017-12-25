@@ -1,6 +1,7 @@
 package com.example.lfy.basicframes.ui.activity;
 
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -9,25 +10,19 @@ import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import com.example.lfy.basicframes.R;
+import com.example.lfy.basicframes.databinding.ActivityVedioBinding;
 import com.tencent.smtt.sdk.VideoActivity;
-import com.tencent.smtt.sdk.WebView;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class VedioActivity extends VideoActivity {
-
-    @BindView(R.id.vedio_web)
-    WebView vedioWeb;
+    private ActivityVedioBinding vedioBinding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        setContentView(R.layout.activity_vedio);
-        ButterKnife.bind(this);
+        vedioBinding=DataBindingUtil.setContentView(this,R.layout.activity_vedio);
         String url = getIntent().getStringExtra("url");
-        vedioWeb.loadUrl(url);
-        vedioWeb.getView().setOverScrollMode(View.OVER_SCROLL_ALWAYS);
+        vedioBinding.vedioWeb.loadUrl(url);
+        vedioBinding.vedioWeb.getView().setOverScrollMode(View.OVER_SCROLL_ALWAYS);
 
     }
 
@@ -50,7 +45,7 @@ public class VedioActivity extends VideoActivity {
     // 向webview发出信息
     private void enableX5FullscreenFunc() {
 
-        if (vedioWeb.getX5WebViewExtension() != null) {
+        if (vedioBinding.vedioWeb.getX5WebViewExtension() != null) {
             Toast.makeText(this, "开启X5全屏播放模式", Toast.LENGTH_LONG).show();
             Bundle data = new Bundle();
 
@@ -60,14 +55,14 @@ public class VedioActivity extends VideoActivity {
 
             data.putInt("DefaultVideoScreen", 2);// 1：以页面内开始播放，2：以全屏开始播放；不设置默认：1
 
-            vedioWeb.getX5WebViewExtension().invokeMiscMethod("setVideoParams",
+            vedioBinding.vedioWeb.getX5WebViewExtension().invokeMiscMethod("setVideoParams",
                     data);
 
         }
     }
 
     private void disableX5FullscreenFunc() {
-        if (vedioWeb.getX5WebViewExtension() != null) {
+        if (vedioBinding.vedioWeb.getX5WebViewExtension() != null) {
             Toast.makeText(this, "恢复webkit初始状态", Toast.LENGTH_LONG).show();
             Bundle data = new Bundle();
 
@@ -77,13 +72,13 @@ public class VedioActivity extends VideoActivity {
 
             data.putInt("DefaultVideoScreen", 2);// 1：以页面内开始播放，2：以全屏开始播放；不设置默认：1
 
-            vedioWeb.getX5WebViewExtension().invokeMiscMethod("setVideoParams",
+            vedioBinding.vedioWeb.getX5WebViewExtension().invokeMiscMethod("setVideoParams",
                     data);
         }
     }
 
     private void enableLiteWndFunc() {
-        if (vedioWeb.getX5WebViewExtension() != null) {
+        if (vedioBinding.vedioWeb.getX5WebViewExtension() != null) {
             Toast.makeText(this, "开启小窗模式", Toast.LENGTH_LONG).show();
             Bundle data = new Bundle();
 
@@ -93,13 +88,13 @@ public class VedioActivity extends VideoActivity {
 
             data.putInt("DefaultVideoScreen", 2);// 1：以页面内开始播放，2：以全屏开始播放；不设置默认：1
 
-            vedioWeb.getX5WebViewExtension().invokeMiscMethod("setVideoParams",
+            vedioBinding.vedioWeb.getX5WebViewExtension().invokeMiscMethod("setVideoParams",
                     data);
         }
     }
 
     private void enablePageVideoFunc() {
-        if (vedioWeb.getX5WebViewExtension() != null) {
+        if (vedioBinding.vedioWeb.getX5WebViewExtension() != null) {
             Toast.makeText(this, "页面内全屏播放模式", Toast.LENGTH_LONG).show();
             Bundle data = new Bundle();
 
@@ -109,7 +104,7 @@ public class VedioActivity extends VideoActivity {
 
             data.putInt("DefaultVideoScreen", 1);// 1：以页面内开始播放，2：以全屏开始播放；不设置默认：1
 
-            vedioWeb.getX5WebViewExtension().invokeMiscMethod("setVideoParams",
+            vedioBinding.vedioWeb.getX5WebViewExtension().invokeMiscMethod("setVideoParams",
                     data);
         }
     }

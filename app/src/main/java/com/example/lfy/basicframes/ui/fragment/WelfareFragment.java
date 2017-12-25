@@ -2,9 +2,11 @@ package com.example.lfy.basicframes.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -15,11 +17,15 @@ import android.widget.Toast;
 
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.adapter.CommonAdapter;
+import com.example.lfy.basicframes.databinding.FragmentVedioBinding;
+import com.example.lfy.basicframes.databinding.FragmentWelfareBinding;
 import com.example.lfy.basicframes.databinding.GankItemBinding;
 import com.example.lfy.basicframes.entity.GankBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
+import com.example.lfy.basicframes.http.Subscriber;
 import com.example.lfy.basicframes.ui.activity.ImagePagerActivity;
 import com.example.lfy.basicframes.ui.base.BaseFragment;
+import com.example.lfy.basicframes.utill.LogUtil;
 import com.example.lfy.basicframes.utill.ToastUtils;
 import com.example.lfy.basicframes.view.EmptyLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -33,10 +39,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * author:ggband
  * data:2017/12/14 00149:23
@@ -44,42 +46,47 @@ import butterknife.Unbinder;
  * desc:福利
  */
 
-public class WelfareFragment extends BaseFragment {
-
-    @BindView(R.id.rv_welfare)
-    RecyclerView rv;
-    @BindView(R.id.fresh_welfare)
-    SmartRefreshLayout freshWelfare;
-    @BindView(R.id.welfare_heard)
-    ClassicsHeader welfareHeard;
-    @BindView(R.id.empty_layout)
-    EmptyLayout emptyLayout;
+public class WelfareFragment extends Fragment {
+    protected Subscriber subscriber;
     //瀑布流
-    private StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+    private StaggeredGridLayoutManager manager;
     private CommonAdapter<GankBean.ResultsBean> adapter;
     private List<GankBean.ResultsBean> list = new ArrayList<>();
     private int page = 1;
+    private FragmentWelfareBinding inflate;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        inflate = DataBindingUtil.inflate(inflater, R.layout.fragment_welfare, container, false);
+        return inflate.getRoot();
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rv.setLayoutManager(manager);
+        subscriber= Subscriber.getInstemce();
+        manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        inflate.rvWelfare.setLayoutManager(manager);
         //获取数据
         getData(page);
         adapter = new CommonAdapter<GankBean.ResultsBean>(list, R.layout.gank_item) {
             @Override
             protected void bindViewItemData(ViewDataBinding binding, final int position, GankBean.ResultsBean gankBean) {
                 GankItemBinding itemBinding = (GankItemBinding) binding;
+                int width = ((Activity) itemBinding.cardView.getContext()).getWindowManager().getDefaultDisplay().getWidth();
+                int height = ((Activity) itemBinding.cardView.getContext()).getWindowManager().getDefaultDisplay().getHeight();
+                ViewGroup.LayoutParams params = itemBinding.cardView.getLayoutParams();
+                //设置图片的相对于屏幕的宽高比
+                params.width = width / 2;
 
                 if (position == 0) {
-                    int width = ((Activity) itemBinding.cardView.getContext()).getWindowManager().getDefaultDisplay().getWidth();
-                    int height = ((Activity) itemBinding.cardView.getContext()).getWindowManager().getDefaultDisplay().getHeight();
-                    ViewGroup.LayoutParams params = itemBinding.cardView.getLayoutParams();
-                    //设置图片的相对于屏幕的宽高比
-                    params.width = width / 2;
-                    params.height = (int) (height * 0.5);
-                    itemBinding.cardView.setLayoutParams(params);
+                    params.height = (int) (width / 2* 0.75);
+                }else {
+                    params.height = (int) (width / 2*1.5);
                 }
+                itemBinding.cardView.setLayoutParams(params);
 
                 Picasso.with(getContext()).load(gankBean.getUrl()).into(itemBinding.ivCard);
                 itemBinding.tvTitle.setText(gankBean.getType());
@@ -99,11 +106,11 @@ public class WelfareFragment extends BaseFragment {
             }
         };
 
-        rv.setAdapter(adapter);
-        welfareHeard.setSpinnerStyle(SpinnerStyle.Scale);//设置下拉动画类型
+        inflate.rvWelfare.setAdapter(adapter);
+        inflate.welfareHeard.setSpinnerStyle(SpinnerStyle.Scale);//设置下拉动画类型
 //        freshWelfare.setPrimaryColors(0xff444444, 0xffffffff);//设置头尾布局不经颜色
-        freshWelfare.setEnableAutoLoadmore(true);//可加载更多
-        freshWelfare.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+        inflate.freshWelfare.setEnableAutoLoadmore(true);//可加载更多
+        inflate.freshWelfare.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 page++;
@@ -119,7 +126,7 @@ public class WelfareFragment extends BaseFragment {
             public void onRefresh(RefreshLayout refreshlayout) {
                 page = 1;
                 //显示加载中
-                emptyLayout.showLoading();
+                inflate.emptyLayout.showLoading();
                 getData(page);
                 refreshlayout.setLoadmoreFinished(false);//再次触发加载更多事件
                 refreshlayout.finishRefresh();
@@ -127,28 +134,24 @@ public class WelfareFragment extends BaseFragment {
         });
 
         //绑定rv,内部后续隐藏rv操作
-        emptyLayout.bindView(rv);
+        inflate.emptyLayout.bindView(inflate.rvWelfare);
         //重新加载
-        emptyLayout.setOnButtonClick(new View.OnClickListener() {
+        inflate.emptyLayout.setOnButtonClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ToastUtils.showShort("重新加载");
                 //触发自动刷新
-                freshWelfare.autoRefresh();
+                inflate.freshWelfare.autoRefresh();
                 page=1;
                 getData(page);
             }
         });
 
         //触发自动刷新
-        freshWelfare.autoRefresh();
+        inflate.freshWelfare.autoRefresh();
     }
 
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_welfare;
-    }
 
     private void getData(final int page) {
 
@@ -162,14 +165,14 @@ public class WelfareFragment extends BaseFragment {
                 list.addAll(value.getResults());
                 adapter.notifyDataSetChanged();
                 //关闭所有
-                emptyLayout.showSuccess();
+                inflate.emptyLayout.showSuccess();
 
             }
 
             @Override
             public void OnError(String msg) {
                 //加载错误
-                emptyLayout.showError();
+                inflate.emptyLayout.showError();
                 if (msg!=null)
                 Log.e("getDataOnError", msg.toString());
             }
@@ -181,6 +184,12 @@ public class WelfareFragment extends BaseFragment {
                 Log.e("getDataOnFinish", "OnFinish");
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LogUtil.e("welfare  销毁");
     }
 
 

@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/fresh_welfare"
+
+<layout  xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data></data>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:id="@+id/welfare_heard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="FixedBehind"/>
-
-        <!--友好提示控件   失败  错误  加载-->
-        <com.example.lfy.basicframes.view.EmptyLayout
-            android:id="@+id/empty_layout"
-            app:elEmptyLayout="@layout/layout_empty"
-            app:elErrorLayout="@layout/layout_error"
-            app:elLoadingLayout="@layout/layout_loading"
-            android:orientation="vertical"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/fresh_welfare"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_welfare"
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:id="@+id/welfare_heard"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </com.example.lfy.basicframes.view.EmptyLayout>
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="Translate"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                android:layout_height="wrap_content"
+                app:srlClassicsSpinnerStyle="FixedBehind"/>
+
+            <!--友好提示控件   失败  错误  加载-->
+            <com.example.lfy.basicframes.view.EmptyLayout
+                android:id="@+id/empty_layout"
+                app:elEmptyLayout="@layout/layout_empty"
+                app:elErrorLayout="@layout/layout_error"
+                app:elLoadingLayout="@layout/layout_loading"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_welfare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.example.lfy.basicframes.view.EmptyLayout>
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlClassicsSpinnerStyle="Translate"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>
+

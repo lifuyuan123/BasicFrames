@@ -1,10 +1,12 @@
 package com.example.lfy.basicframes.ui.fragment;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,11 +17,14 @@ import android.widget.Toast;
 
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.adapter.CommonAdapter;
+import com.example.lfy.basicframes.databinding.FragmentVedioBinding;
 import com.example.lfy.basicframes.databinding.RestItemBinding;
 import com.example.lfy.basicframes.entity.RestBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
+import com.example.lfy.basicframes.http.Subscriber;
 import com.example.lfy.basicframes.ui.activity.WEBActivity;
 import com.example.lfy.basicframes.ui.base.BaseFragment;
+import com.example.lfy.basicframes.utill.LogUtil;
 import com.example.lfy.basicframes.view.EmptyLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,10 +35,6 @@ import com.tencent.smtt.sdk.TbsVideo;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * author:ggband
  * data:2017/12/14 00149:27
@@ -41,31 +42,29 @@ import butterknife.Unbinder;
  * desc:
  */
 
-public class VideoFragment extends BaseFragment {
+public class VideoFragment extends Fragment {
 
-
-    @BindView(R.id.rv_vedio)
-    RecyclerView rvVedio;
-    @BindView(R.id.fresh_vedio)
-    SmartRefreshLayout freshVedio;
-    @BindView(R.id.foot_vedio)
-    BallPulseFooter footVedio;
-    @BindView(R.id.empty_layout_vedio)
-    EmptyLayout emptyLayoutVedio;
-
-    private LinearLayoutManager manager = new LinearLayoutManager(getContext());
+    protected Subscriber subscriber;
+    private LinearLayoutManager manager ;
     private List<RestBean.ResultsBean> list = new ArrayList<>();
     private CommonAdapter<RestBean.ResultsBean> adapter;
     private int page = 1;
+    private FragmentVedioBinding inflate;
 
-
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        inflate = DataBindingUtil.inflate(inflater, R.layout.fragment_vedio, container, false);
+        return inflate.getRoot();
+    }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        footVedio.setAnimatingColor(Color.parseColor("#ffffff"));//设置footview颜色
-        footVedio.setBackgroundColor(Color.parseColor("#11BBFF"));//设置背景颜色
-        freshVedio.setEnableAutoLoadmore(true);
-        freshVedio.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+        subscriber= Subscriber.getInstemce();
+        inflate.footVedio.setAnimatingColor(Color.parseColor("#ffffff"));//设置footview颜色
+        inflate.footVedio.setBackgroundColor(Color.parseColor("#11BBFF"));//设置背景颜色
+        inflate.freshVedio.setEnableAutoLoadmore(true);
+        inflate.freshVedio.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 page++;
@@ -86,17 +85,17 @@ public class VideoFragment extends BaseFragment {
         });
 
 
-        emptyLayoutVedio.bindView(rvVedio);
-        emptyLayoutVedio.setOnButtonClick(new View.OnClickListener() {
+        inflate.emptyLayoutVedio.bindView(inflate.rvVedio);
+        inflate.emptyLayoutVedio.setOnButtonClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                freshVedio.autoRefresh();
+                inflate.freshVedio.autoRefresh();
                 page=1;
                 getData(page);
             }
         });
-
-        rvVedio.setLayoutManager(manager);
+        manager = new LinearLayoutManager(getContext());
+        inflate.rvVedio.setLayoutManager(manager);
         adapter = new CommonAdapter<RestBean.ResultsBean>(list, R.layout.rest_item) {
             @Override
             protected void bindViewItemData(ViewDataBinding binding, int position, final RestBean.ResultsBean resultsBean) {
@@ -124,8 +123,8 @@ public class VideoFragment extends BaseFragment {
         };
 
         getData(page);
-        rvVedio.setAdapter(adapter);
-        freshVedio.autoRefresh();
+        inflate.rvVedio.setAdapter(adapter);
+        inflate.freshVedio.autoRefresh();
     }
 
     private void getData(final int page) {
@@ -138,14 +137,14 @@ public class VideoFragment extends BaseFragment {
                 }
                 list.addAll(value.getResults());
                 adapter.notifyDataSetChanged();
-                emptyLayoutVedio.showSuccess();
+                inflate.emptyLayoutVedio.showSuccess();
             }
 
             @Override
             public void OnError(String msg) {
                 if (msg!=null)
                 Log.e("restOnError", msg.toString());
-                emptyLayoutVedio.showError();
+                inflate.emptyLayoutVedio.showError();
             }
 
             @Override
@@ -155,9 +154,10 @@ public class VideoFragment extends BaseFragment {
         });
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_vedio;
-    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LogUtil.e("vedio  销毁");
+    }
 }

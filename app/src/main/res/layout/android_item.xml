@@ -22,7 +22,7 @@
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_marginRight="@dimen/x5"
                 android:text="名字"
-                android:textSize="@dimen/x14"
+                android:textSize="14sp"
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -31,7 +31,7 @@
                 android:text="点击跳转"
                 android:textColor="#0633ae"
                 android:id="@+id/tv_url"
-                android:textSize="@dimen/x12"
+                android:textSize="14sp"
                 android:layout_marginTop="@dimen/x10"
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_marginRight="@dimen/x5"

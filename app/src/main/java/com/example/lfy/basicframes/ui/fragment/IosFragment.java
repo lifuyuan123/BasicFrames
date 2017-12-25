@@ -1,9 +1,11 @@
 package com.example.lfy.basicframes.ui.fragment;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,11 +16,14 @@ import android.widget.Toast;
 
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.adapter.CommonAdapter;
+import com.example.lfy.basicframes.databinding.FragmentIosBinding;
 import com.example.lfy.basicframes.databinding.IosItemBinding;
 import com.example.lfy.basicframes.entity.IosBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
+import com.example.lfy.basicframes.http.Subscriber;
 import com.example.lfy.basicframes.ui.activity.WEBActivity;
 import com.example.lfy.basicframes.ui.base.BaseFragment;
+import com.example.lfy.basicframes.utill.LogUtil;
 import com.example.lfy.basicframes.view.EmptyLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -28,10 +33,6 @@ import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * author:ggband
  * data:2017/12/14 00149:26
@@ -39,41 +40,43 @@ import butterknife.Unbinder;
  * desc:
  */
 
-public class IosFragment extends BaseFragment {
+public class IosFragment extends Fragment {
 
-
-    @BindView(R.id.rv_ios)
-    RecyclerView rvIos;
-    @BindView(R.id.fresh_ios)
-    SmartRefreshLayout freshIos;
-    @BindView(R.id.empty_layout_iod)
-    EmptyLayout emptyLayoutIod;
-
-    private LinearLayoutManager manager = new LinearLayoutManager(getContext());
+    protected Subscriber subscriber;
+    private LinearLayoutManager manager ;
     private CommonAdapter<IosBean.ResultsBean> adapter;
     private List<IosBean.ResultsBean> list = new ArrayList<>();
     private HeaderAndFooterWrapper headerAndFooterWrapper;//头尾布局适配器 传入我们的adapter
     private View footView;
     int page = 1;
+    private FragmentIosBinding inflate;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        inflate = DataBindingUtil.inflate(inflater, R.layout.fragment_ios, container, false);
+        return inflate.getRoot();
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvIos.setLayoutManager(manager);
+        subscriber= Subscriber.getInstemce();
+        manager = new LinearLayoutManager(getContext());
+        inflate.rvIos.setLayoutManager(manager);
 
-
-        emptyLayoutIod.bindView(rvIos);
-        emptyLayoutIod.setOnButtonClick(new View.OnClickListener() {
+        inflate.emptyLayoutIod.bindView(inflate.rvIos);
+        inflate.emptyLayoutIod.setOnButtonClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                freshIos.autoRefresh();
+                inflate.freshIos.autoRefresh();
                 page=1;
                 getData(page);
             }
         });
 
-        freshIos.setEnableAutoLoadmore(true);
-        freshIos.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+        inflate.freshIos.setEnableAutoLoadmore(true);
+        inflate.freshIos.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 page++;
@@ -116,12 +119,12 @@ public class IosFragment extends BaseFragment {
         footView.setVisibility(View.GONE);
         headerAndFooterWrapper = new HeaderAndFooterWrapper(adapter);//将适配器传入
         headerAndFooterWrapper.addFootView(footView);
-        rvIos.setAdapter(headerAndFooterWrapper);
-        freshIos.autoRefresh();
+        inflate.rvIos.setAdapter(headerAndFooterWrapper);
+        inflate.freshIos.autoRefresh();
     }
 
     private void getData(final int page) {
-        emptyLayoutIod.showLoading();
+        inflate.emptyLayoutIod.showLoading();
         subscriber.getGankiOS("10", page + "", "iOS", new ApiCallBack<IosBean>() {
             @Override
             public void OnSuccess(IosBean value) {
@@ -131,14 +134,14 @@ public class IosFragment extends BaseFragment {
                 }
                 list.addAll(value.getResults());
                 headerAndFooterWrapper.notifyDataSetChanged();
-                emptyLayoutIod.showSuccess();
+                inflate.emptyLayoutIod.showSuccess();
             }
 
             @Override
             public void OnError(String msg) {
                 if (msg != null)
                     Log.e("iosOnError", msg.toString());
-                emptyLayoutIod.showError();
+                inflate.emptyLayoutIod.showError();
             }
 
             @Override
@@ -148,11 +151,11 @@ public class IosFragment extends BaseFragment {
         });
     }
 
+
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_ios;
+    public void onDestroyView() {
+        super.onDestroyView();
+        LogUtil.e("ios  销毁");
     }
-
-
 
 }

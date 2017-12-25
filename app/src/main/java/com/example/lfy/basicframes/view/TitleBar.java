@@ -78,8 +78,8 @@ public class TitleBar extends RelativeLayout {
         parseStyle(context, attrs);
     }
 
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+    private int sp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, dp,
                 Resources.getSystem().getDisplayMetrics());
     }
 
@@ -95,11 +95,11 @@ public class TitleBar extends RelativeLayout {
             float righttitleSize=ta.getDimension(R.styleable.TitleBar_titleBarTitleSize,18);
             titleView.setText(title);
             rightTitleView.setText(rightTitle);
-            rightTitleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,righttitleSize);
+            rightTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP,righttitleSize);
             leftTitleView.setText(leftTitle);
 
             titleView.setTextColor(titleColor);
-            titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,titleSize);
+            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP,titleSize);
                 rightTitleView.setTextColor(titleColor);
                 leftTitleView.setTextColor(titleColor);
                 if (isShowLine)

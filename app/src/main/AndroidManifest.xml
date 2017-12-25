@@ -60,7 +60,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.BannerActivity" />
-        <activity android:name=".ui.activity.MenuActivity"></activity>
+        <activity android:name=".ui.activity.MenuActivity" />
+        <activity android:name=".ui.activity.PermissionsActivity" />
+        <activity android:name=".ui.activity.DataBindingActivity" />
+        <activity android:name=".ui.activity.TestActivity"></activity>
     </application>
 
 </manifest>

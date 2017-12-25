@@ -4,15 +4,10 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+
 
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.http.Subscriber;
-import com.example.lfy.basicframes.utill.StatusBarUtil;
-import com.example.lfy.basicframes.utill.Utils;
-import com.example.lfy.basicframes.view.SwipeBackActivity.SwipeBackActivityBase;
-import com.example.lfy.basicframes.view.SwipeBackActivity.SwipeBackActivityHelper;
-import com.example.lfy.basicframes.view.SwipeBackActivity.SwipeBackLayout;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 

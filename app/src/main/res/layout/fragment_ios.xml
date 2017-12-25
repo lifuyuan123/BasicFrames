@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/fresh_ios"
+<layout  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.scwang.smartrefresh.header.StoreHouseHeader
-            app:shhText="iosfragment"
-            app:shhLineWidth="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y45" />
-        <com.example.lfy.basicframes.view.EmptyLayout
-            android:id="@+id/empty_layout_iod"
-            app:elEmptyLayout="@layout/layout_empty"
-            app:elErrorLayout="@layout/layout_error"
-            app:elLoadingLayout="@layout/layout_loading"
-            android:orientation="vertical"
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/fresh_ios"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_ios"
+            <com.scwang.smartrefresh.header.StoreHouseHeader
+                app:shhText="iosfragment"
+                app:shhLineWidth="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.example.lfy.basicframes.view.EmptyLayout>
+                android:layout_height="@dimen/y45" />
+            <com.example.lfy.basicframes.view.EmptyLayout
+                android:id="@+id/empty_layout_iod"
+                app:elEmptyLayout="@layout/layout_empty"
+                app:elErrorLayout="@layout/layout_error"
+                app:elLoadingLayout="@layout/layout_loading"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_ios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.example.lfy.basicframes.view.EmptyLayout>
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            app:srlPrimaryColor="#333333"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="Translate"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                app:srlPrimaryColor="#333333"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlClassicsSpinnerStyle="Translate"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

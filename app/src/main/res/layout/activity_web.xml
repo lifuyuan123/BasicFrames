@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.lfy.basicframes.ui.activity.WEBActivity">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data></data>
 
-    <com.example.lfy.basicframes.view.TitleBar
-        android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleBarBackground="#9aeaba"
-        app:titleBarTitleColor="@color/colorBack"
-        app:titleBarLeftImage="@drawable/im_back"
-        app:titleBarTitle="web"
-        />
-    <android.support.v7.widget.Toolbar
-        android:visibility="gone"
-        android:id="@+id/toolbar_web"
-        android:background="#9aeaba"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    <ProgressBar
-        android:id="@+id/progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progress="0"
-        android:max="100"
-        android:progressDrawable="@drawable/progress_back"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.lfy.basicframes.ui.activity.WEBActivity">
 
-    <com.tencent.smtt.sdk.WebView
-        android:id="@+id/webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.tencent.smtt.sdk.WebView>
+        <com.example.lfy.basicframes.view.TitleBar
+            android:id="@+id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleBarBackground="#9aeaba"
+            app:titleBarTitleColor="@color/colorBack"
+            app:titleBarLeftImage="@drawable/im_back"
+            app:titleBarTitle="web"
+            />
+        <android.support.v7.widget.Toolbar
+            android:visibility="gone"
+            android:id="@+id/toolbar_web"
+            android:background="#9aeaba"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
 
-</LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progress="0"
+            android:max="100"
+            android:progressDrawable="@drawable/progress_back"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+
+        <com.tencent.smtt.sdk.WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.tencent.smtt.sdk.WebView>
+
+    </LinearLayout>
+</layout>
+

@@ -1,17 +1,14 @@
 package com.example.lfy.basicframes.ui.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.lfy.basicframes.R;
+import com.example.lfy.basicframes.databinding.ActivityGuideBinding;
 import com.example.lfy.basicframes.ui.base.BaseActivity;
 import com.example.lfy.basicframes.utill.LogUtil;
-import com.example.lfy.basicframes.utill.StatusBarUtils;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 
@@ -20,19 +17,12 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 public class GuideActivity extends BaseActivity {
 
-
-    @BindView(R.id.banner_guide_background)
-    BGABanner mBackgroundBanner;
-    @BindView(R.id.banner_guide_foreground)
-    BGABanner mForegroundBanner;
-    @BindView(R.id.tv_guide_skip)
-    TextView tvGuideSkip;
+    private ActivityGuideBinding guideBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guide);
-        ButterKnife.bind(this);
+        guideBinding=DataBindingUtil.setContentView(this,R.layout.activity_guide);
         setListener();
         processLogic();
         LogUtil.e("guide");
@@ -46,7 +36,7 @@ public class GuideActivity extends BaseActivity {
          * 在 BGABanner 里已经帮开发者处理了防止重复点击事件
          * 在 BGABanner 里已经帮开发者处理了「跳过按钮」和「进入按钮」的显示与隐藏
          */
-        mForegroundBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
+        guideBinding.bannerGuideForeground.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
             @Override
             public void onClickEnterOrSkip() {
                 startActivity(new Intent(GuideActivity.this, MainActivity.class));
@@ -57,9 +47,9 @@ public class GuideActivity extends BaseActivity {
        // 设置数据源
     private void processLogic() {
         //背景
-        mBackgroundBanner.setData(R.drawable.uoko_guide_background_1, R.drawable.uoko_guide_background_2, R.drawable.uoko_guide_background_3);
+        guideBinding.bannerGuideBackground.setData(R.drawable.uoko_guide_background_1, R.drawable.uoko_guide_background_2, R.drawable.uoko_guide_background_3);
         //前景
-        mForegroundBanner.setData(R.drawable.uoko_guide_foreground_1, R.drawable.uoko_guide_foreground_2, R.drawable.uoko_guide_foreground_3);
+        guideBinding.bannerGuideForeground.setData(R.drawable.uoko_guide_foreground_1, R.drawable.uoko_guide_foreground_2, R.drawable.uoko_guide_foreground_3);
     }
 
     @Override
@@ -67,6 +57,6 @@ public class GuideActivity extends BaseActivity {
         super.onResume();
 
         // 如果开发者的引导页主题是透明的，需要在界面可见时给背景 Banner 设置一个白色背景，避免滑动过程中两个 Banner 都设置透明度后能看到 Launcher
-        mBackgroundBanner.setBackgroundResource(android.R.color.white);
+        guideBinding.bannerGuideBackground.setBackgroundResource(android.R.color.white);
     }
 }

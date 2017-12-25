@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/fresh_android"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data></data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.scwang.smartrefresh.header.WaveSwipeHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <com.example.lfy.basicframes.view.EmptyLayout
-            android:id="@+id/empty_layout_android"
-            app:elEmptyLayout="@layout/layout_empty"
-            app:elErrorLayout="@layout/layout_error"
-            app:elLoadingLayout="@layout/layout_loading"
-            android:orientation="vertical"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/fresh_android"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_android"
+            <com.scwang.smartrefresh.header.WaveSwipeHeader
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-        </com.example.lfy.basicframes.view.EmptyLayout>
-        <com.scwang.smartrefresh.layout.footer.BallPulseFooter
-            android:id="@+id/foot_android"
-            app:srlPrimaryColor="#2196F3"
-            app:layout_srlSpinnerStyle="Scale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <com.example.lfy.basicframes.view.EmptyLayout
+                android:id="@+id/empty_layout_android"
+                app:elEmptyLayout="@layout/layout_empty"
+                app:elErrorLayout="@layout/layout_error"
+                app:elLoadingLayout="@layout/layout_loading"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.example.lfy.basicframes.view.EmptyLayout>
+            <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+                android:id="@+id/foot_android"
+                app:srlPrimaryColor="#2196F3"
+                app:layout_srlSpinnerStyle="Scale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-
-
-
-</LinearLayout>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </LinearLayout>
+</layout>

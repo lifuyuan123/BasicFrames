@@ -1,6 +1,7 @@
 package com.example.lfy.basicframes.ui.activity;
 
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.adapter.SwipeDeleteAdapter;
 import com.example.lfy.basicframes.adapter.touchHelper.ItemTouchHelperCallback;
+import com.example.lfy.basicframes.databinding.ActivitySwipeDeleteBinding;
 import com.example.lfy.basicframes.entity.NormalModel;
 import com.example.lfy.basicframes.ui.base.BaseActivity;
 import com.example.lfy.basicframes.utill.StatusBarUtils;
@@ -24,8 +26,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.bingoogolapple.baseadapter.BGADivider;
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.baseadapter.BGAOnItemChildLongClickListener;
@@ -34,14 +34,6 @@ import cn.bingoogolapple.baseadapter.BGAOnRVItemLongClickListener;
 
 public class SwipeDeleteActivity extends BaseActivity implements BGAOnRVItemClickListener, BGAOnRVItemLongClickListener, BGAOnItemChildClickListener, BGAOnItemChildLongClickListener {
 
-    @BindView(R.id.title_bar_delte)
-    TitleBar titleBarDelte;
-    @BindView(R.id.rv_delete)
-    RecyclerView rvDelete;
-    @BindView(R.id.empty_layout_delete)
-    EmptyLayout emptyLayoutDelete;
-    @BindView(R.id.fresh_delete)
-    SmartRefreshLayout freshDelete;
     private SwipeDeleteAdapter mAdapter;
     private List<NormalModel> list=new ArrayList<>();
     private LinearLayoutManager manager=new LinearLayoutManager(this);
@@ -49,17 +41,17 @@ public class SwipeDeleteActivity extends BaseActivity implements BGAOnRVItemClic
     //拖拽排序助手
      private ItemTouchHelperCallback mItemTouchHelper;
      private ItemTouchHelper helper;
+    private ActivitySwipeDeleteBinding swipeDeleteBinding;
 
 //    「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_swipe_delete);
-        ButterKnife.bind(this);
+        swipeDeleteBinding=DataBindingUtil.setContentView(this,R.layout.activity_swipe_delete);
         StatusBarUtils.setColorNoTranslucent(this,getResources().getColor(R.color.main));
 
-        titleBarDelte.setLeftLayoutClickListener(new View.OnClickListener() {
+        swipeDeleteBinding.titleBarDelte.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -67,7 +59,7 @@ public class SwipeDeleteActivity extends BaseActivity implements BGAOnRVItemClic
         });
 
         //初始化适配器和监听器
-        mAdapter = new SwipeDeleteAdapter(rvDelete);
+        mAdapter = new SwipeDeleteAdapter(swipeDeleteBinding.rvDelete);
         mAdapter.setOnRVItemClickListener(this);
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
@@ -76,18 +68,18 @@ public class SwipeDeleteActivity extends BaseActivity implements BGAOnRVItemClic
         getData();
 
         mAdapter.setData(list);
-        rvDelete.setLayoutManager(manager);
-        rvDelete.addItemDecoration(BGADivider.newBitmapDivider());//自定义分割线
-        rvDelete.setAdapter(mAdapter);
+        swipeDeleteBinding.rvDelete.setLayoutManager(manager);
+        swipeDeleteBinding.rvDelete.addItemDecoration(BGADivider.newBitmapDivider());//自定义分割线
+        swipeDeleteBinding.rvDelete.setAdapter(mAdapter);
 
         // 初始化拖拽排序和滑动删除
         mItemTouchHelper = new ItemTouchHelperCallback(mAdapter);
         helper = new ItemTouchHelper(mItemTouchHelper);
         //拖拽绑定rv
-        helper.attachToRecyclerView(rvDelete);
+        helper.attachToRecyclerView(swipeDeleteBinding.rvDelete);
 
         //rv设置滑动监听
-        rvDelete.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        swipeDeleteBinding.rvDelete.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                //正在滚动  SCROLL_STATE_IDLE = 0;
@@ -101,8 +93,8 @@ public class SwipeDeleteActivity extends BaseActivity implements BGAOnRVItemClic
             }
         });
 
-        freshDelete.setEnableAutoLoadmore(true);//可加载更多
-        freshDelete.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+        swipeDeleteBinding.freshDelete.setEnableAutoLoadmore(true);//可加载更多
+        swipeDeleteBinding.freshDelete.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 page++;
@@ -117,7 +109,7 @@ public class SwipeDeleteActivity extends BaseActivity implements BGAOnRVItemClic
                 refreshlayout.finishRefresh();
             }
         });
-        freshDelete.autoRefresh();//刷新
+        swipeDeleteBinding.freshDelete.autoRefresh();//刷新
 
     }
 

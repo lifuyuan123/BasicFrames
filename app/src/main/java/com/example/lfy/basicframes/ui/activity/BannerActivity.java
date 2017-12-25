@@ -1,5 +1,7 @@
 package com.example.lfy.basicframes.ui.activity;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.lfy.basicframes.R;
+import com.example.lfy.basicframes.databinding.ActivityBannerBinding;
 import com.example.lfy.basicframes.entity.BannerModel;
 import com.example.lfy.basicframes.entity.RestBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
@@ -20,8 +23,6 @@ import com.example.lfy.basicframes.view.TitleBar;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.Picasso;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.bingoogolapple.bgabanner.BGABanner;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,46 +32,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BannerActivity extends BaseActivity implements BGABanner.Delegate<ImageView, String>, BGABanner.Adapter<ImageView, String> {
 
-    @BindView(R.id.banner_main_default)
-    BGABanner mDefaultBanner;
-    @BindView(R.id.banner_main_cube)
-    BGABanner mCubeBanner;
-    @BindView(R.id.banner_main_accordion)
-    BGABanner mAccordionBanner;
-    @BindView(R.id.banner_main_flip)
-    BGABanner mFlipBanner;
-    @BindView(R.id.banner_main_rotate)
-    BGABanner mRotateBanner;
-    @BindView(R.id.banner_main_alpha)
-    BGABanner mAlphaBanner;
-    @BindView(R.id.banner_main_zoomFade)
-    BGABanner mZoomFadeBanner;
-    @BindView(R.id.banner_main_fade)
-    BGABanner mFadeBanner;
-    @BindView(R.id.banner_main_zoomCenter)
-    BGABanner mZoomCenterBanner;
-    @BindView(R.id.banner_main_zoom)
-    BGABanner mZoomBanner;
-    @BindView(R.id.banner_main_stack)
-    BGABanner mStackBanner;
-    @BindView(R.id.banner_main_zoomStack)
-    BGABanner mZoomStackBanner;
-    @BindView(R.id.banner_main_depth)
-    BGABanner mDepthBanner;
-    @BindView(R.id.title_bar_banner)
-    TitleBar titleBarBanner;
+
     private apiServer apiserver;//服务
+    private ActivityBannerBinding bannerBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_banner);
-        ButterKnife.bind(this);
+        bannerBinding=DataBindingUtil.setContentView(this, R.layout.activity_banner);
         //沉浸
         StatusBarUtils.setColorNoTranslucent(this,getResources().getColor(R.color.main));
 
         //返回
-        titleBarBanner.setLeftLayoutClickListener(new View.OnClickListener() {
+        bannerBinding.titleBarBanner.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -97,24 +71,24 @@ public class BannerActivity extends BaseActivity implements BGABanner.Delegate<I
     }
 
     private void setListener() {
-        mDefaultBanner.setDelegate(this);
-        mCubeBanner.setDelegate(this);
+        bannerBinding.bannerMainDefault.setDelegate(this);
+        bannerBinding.bannerMainCube.setDelegate(this);
     }
 
     private void loadData() {
-        loadData(mDefaultBanner, 1);
-        loadData(mCubeBanner, 2);
-        loadData(mAccordionBanner, 3);
-        loadData(mFlipBanner, 4);
-        loadData(mRotateBanner, 5);
-        loadData(mAlphaBanner, 6);
-        loadData(mZoomFadeBanner, 3);
-        loadData(mFadeBanner, 4);
-        loadData(mZoomCenterBanner, 5);
-        loadData(mZoomBanner, 6);
-        loadData(mStackBanner, 3);
-        loadData(mZoomStackBanner, 4);
-        loadData(mDepthBanner, 5);
+        loadData(bannerBinding.bannerMainDefault, 1);
+        loadData(bannerBinding.bannerMainCube, 2);
+        loadData(bannerBinding.bannerMainAccordion, 3);
+        loadData(bannerBinding.bannerMainFlip, 4);
+        loadData(bannerBinding.bannerMainRotate, 5);
+        loadData(bannerBinding.bannerMainAlpha, 6);
+        loadData(bannerBinding.bannerMainZoomFade, 3);
+        loadData(bannerBinding.bannerMainFade, 4);
+        loadData(bannerBinding.bannerMainZoomCenter, 5);
+        loadData(bannerBinding.bannerMainZoom, 6);
+        loadData(bannerBinding.bannerMainStack, 3);
+        loadData(bannerBinding.bannerMainZoomStack, 4);
+        loadData(bannerBinding.bannerMainDepth, 5);
     }
 
 

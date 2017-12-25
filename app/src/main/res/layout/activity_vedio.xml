@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.lfy.basicframes.ui.activity.VedioActivity">
-
-    <FrameLayout
+<layout>
+    <data></data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.lfy.basicframes.ui.activity.VedioActivity">
 
-        <com.tencent.smtt.sdk.WebView
-            android:id="@+id/vedio_web"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.tencent.smtt.sdk.WebView>
-    </FrameLayout>
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <com.tencent.smtt.sdk.WebView
+                android:id="@+id/vedio_web"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></com.tencent.smtt.sdk.WebView>
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>
+

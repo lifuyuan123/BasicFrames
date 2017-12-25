@@ -1,68 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.lfy.basicframes.ui.activity.GuideActivity">
-    <cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout
+
+<layout  xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data></data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <!--背景-->
-        <cn.bingoogolapple.bgabanner.BGABanner
-            android:id="@+id/banner_guide_background"
+        android:layout_height="match_parent"
+        tools:context="com.example.lfy.basicframes.ui.activity.GuideActivity">
+        <cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:banner_pageChangeDuration="1000"
-            app:banner_pointAutoPlayAble="false"
-            app:banner_pointContainerBackground="@android:color/transparent"
-            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-            app:banner_pointTopBottomMargin="15dp"
-            app:banner_transitionEffect="fade"/>
+            android:layout_height="match_parent" >
 
-        <!--app:banner_transitionEffect="alpha"   控制图片是否平移或者不动-->
+            <!--背景-->
+            <cn.bingoogolapple.bgabanner.BGABanner
+                android:id="@+id/banner_guide_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:banner_pageChangeDuration="1000"
+                app:banner_pointAutoPlayAble="false"
+                app:banner_pointContainerBackground="@android:color/transparent"
+                app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+                app:banner_pointTopBottomMargin="15dp"
+                app:banner_transitionEffect="fade"/>
 
-        <!--前景-->
-        <cn.bingoogolapple.bgabanner.BGABanner
-            android:id="@+id/banner_guide_foreground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:banner_pageChangeDuration="1000"
-            app:banner_pointAutoPlayAble="false"
-            app:banner_pointContainerBackground="@android:color/transparent"
-            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-            app:banner_pointTopBottomMargin="15dp"
-            app:banner_transitionEffect="alpha"/>
-    </cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout>
+            <!--app:banner_transitionEffect="alpha"   控制图片是否平移或者不动-->
 
-    <TextView
-        android:id="@+id/tv_guide_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:padding="4dp"
-        android:text="跳过 >"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"/>
+            <!--前景-->
+            <cn.bingoogolapple.bgabanner.BGABanner
+                android:id="@+id/banner_guide_foreground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:banner_pageChangeDuration="1000"
+                app:banner_pointAutoPlayAble="false"
+                app:banner_pointContainerBackground="@android:color/transparent"
+                app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+                app:banner_pointTopBottomMargin="15dp"
+                app:banner_transitionEffect="alpha"/>
+        </cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout>
 
-    <com.flyco.roundview.RoundTextView
-        android:id="@+id/btn_guide_enter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        app:rv_backgroundColor="#ACA9A2"
-        app:rv_cornerRadius="6dp"
-        android:padding="8dp"
-        android:text="进入主界面"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/x12"
-        android:visibility="gone"
-        tools:visibility="visible"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_guide_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:padding="4dp"
+            android:text="跳过 >"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"/>
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/btn_guide_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            app:rv_backgroundColor="#ACA9A2"
+            app:rv_cornerRadius="6dp"
+            android:padding="8dp"
+            android:text="进入主界面"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+    </RelativeLayout>
+</layout>
+

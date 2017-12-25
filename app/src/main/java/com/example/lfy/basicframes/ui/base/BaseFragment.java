@@ -1,5 +1,7 @@
 package com.example.lfy.basicframes.ui.base;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,8 +11,6 @@ import android.view.ViewGroup;
 
 import com.example.lfy.basicframes.http.Subscriber;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * author:ggband
@@ -21,7 +21,7 @@ import butterknife.Unbinder;
 
 abstract public class BaseFragment extends Fragment {
 
-    private Unbinder bind;
+//    private Unbinder bind;
     protected Subscriber subscriber;
 
 
@@ -29,7 +29,7 @@ abstract public class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(getLayoutId(),container,false);
-        bind = ButterKnife.bind(this, view);
+//        bind = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -41,10 +41,10 @@ abstract public class BaseFragment extends Fragment {
     abstract protected int getLayoutId();
 
 
-    //onDestroyView此方法将view置为空
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        bind.unbind();
-    }
+//    onDestroyView此方法将view置为空
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        bind.unbind();
+//    }
 }

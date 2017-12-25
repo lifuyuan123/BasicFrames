@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -22,19 +23,11 @@ import java.util.List;
  * 权限处理
  */
 
-public class EasyPermissionsEx {
+public class EasyPermissionsEx  extends Activity{
 
     private static final String TAG = "EasyPermissionsEx";
 
-    public interface PermissionCallbacks extends ActivityCompat.OnRequestPermissionsResultCallback {
-
-        void onPermissionsGranted(int requestCode, List<String> perms);
-
-        void onPermissionsDenied(int requestCode, List<String> perms);
-
-    }
-
-
+    //检查是否有此权限
     public static boolean hasPermissions(Context context, String... perms) {
         // Always return true for SDK < M, let the system deal with the permissions
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -58,6 +51,7 @@ public class EasyPermissionsEx {
     }
 
 
+    //申请权限   第一次直接弹出   之后用snackbar提示
     public static void requestPermissions(final Object object, String rationale, int snackbarActionResId,
                                           final int requestCode, final String... perms) {
 
@@ -88,81 +82,6 @@ public class EasyPermissionsEx {
         }
     }
 
-
-
-    public static boolean somePermissionPermanentlyDenied(Object object, final String... deniedPermissions) {
-        for (String deniedPermission : deniedPermissions) {
-            if (permissionPermanentlyDenied(object, deniedPermission)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-
-    public static boolean permissionPermanentlyDenied(Object object, String deniedPermission) {
-        return !shouldShowRequestPermissionRationale(object, deniedPermission);
-    }
-
-
-
-    public static void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                                  int[] grantResults, Object... receivers) {
-
-
-        ArrayList<String> granted = new ArrayList<>();
-        ArrayList<String> denied = new ArrayList<>();
-        for (int i = 0; i < permissions.length; i++) {
-            String perm = permissions[i];
-            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                granted.add(perm);
-            } else {
-                denied.add(perm);
-            }
-        }
-
-        // iterate through all receivers
-        for (Object object : receivers) {
-            // Report granted permissions, if any.
-            if (!granted.isEmpty()) {
-                if (object instanceof PermissionCallbacks) {
-                    ((PermissionCallbacks) object).onPermissionsGranted(requestCode, granted);
-                }
-            }
-
-            // Report denied permissions, if any.
-            if (!denied.isEmpty()) {
-                if (object instanceof PermissionCallbacks) {
-                    ((PermissionCallbacks) object).onPermissionsDenied(requestCode, denied);
-                }
-            }
-        }
-
-    }
-
-
-    public static void goSettings2Permissions(final Object object, String rationale, String snackbarAction, final int requestCode){
-        checkCallingObjectSuitability(object);
-
-        final Activity activity = getActivity(object);
-        if (null == activity) {
-            return;
-        }
-
-        Snackbar.make(activity.findViewById(android.R.id.content), rationale, Snackbar.LENGTH_LONG)
-                .setAction(snackbarAction, new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
-                        intent.setData(uri);
-                        startForResult(object, intent, requestCode);
-                    }
-                })
-                .show();
-    }
 
     @TargetApi(23)
     private static boolean shouldShowRequestPermissionRationale(Object object, String perm) {

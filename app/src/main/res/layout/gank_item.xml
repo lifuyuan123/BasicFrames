@@ -11,7 +11,7 @@
         app:cardCornerRadius="@dimen/x6"
         app:cardElevation="@dimen/x5"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y150">
+        android:layout_height="@dimen/x220">
         <ImageView
             android:id="@+id/iv_card"
             android:src="@color/colorAccent"
@@ -24,6 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:id="@+id/tv_title"
             android:text="标题"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

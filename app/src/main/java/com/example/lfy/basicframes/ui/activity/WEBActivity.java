@@ -1,5 +1,6 @@
 package com.example.lfy.basicframes.ui.activity;
 
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.webkit.WebSettings;
 import android.widget.ProgressBar;
 
 import com.example.lfy.basicframes.R;
+import com.example.lfy.basicframes.databinding.ActivityWebBinding;
 import com.example.lfy.basicframes.ui.base.BaseActivity;
 import com.example.lfy.basicframes.utill.StatusBarUtils;
 import com.example.lfy.basicframes.view.TitleBar;
@@ -18,37 +20,27 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class WEBActivity extends BaseActivity {
 
-    @BindView(R.id.webview)
-    WebView webview;
-    @BindView(R.id.toolbar_web)
-    Toolbar toolbarWeb;
-    @BindView(R.id.progress)
-    ProgressBar progress;
-    @BindView(R.id.title_bar)
-    TitleBar titleBar;
     private String url;
+    private ActivityWebBinding webBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
-        ButterKnife.bind(this);
+        webBinding=DataBindingUtil.setContentView(this,R.layout.activity_web);
 
         //状态栏相关
         StatusBarUtils.setColorNoTranslucent(this,Color.parseColor("#9aeaba"));
 //        //状态栏一起拉动  但是湛底的activity状态栏不能是透明的   否则滑动过程中是透明色 完成滑动后会恢复
 //        StatusBarUtils.setColorForSwipeBack(this,Color.parseColor("#9aeaba"),0);
 
-        setSupportActionBar(toolbarWeb);
-        titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
+        setSupportActionBar(webBinding.toolbarWeb);
+        webBinding.titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -56,15 +48,15 @@ public class WEBActivity extends BaseActivity {
         });
 
         url = getIntent().getStringExtra("url");
-        webview.loadUrl(url);
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.getSettings().setAppCacheEnabled(true);
-        webview.getSettings().setDomStorageEnabled(true);
-        webview.setDrawingCacheEnabled(true);
+        webBinding.webview.loadUrl(url);
+        webBinding.webview.getSettings().setJavaScriptEnabled(true);
+        webBinding.webview.getSettings().setAppCacheEnabled(true);
+        webBinding.webview.getSettings().setDomStorageEnabled(true);
+        webBinding.webview.setDrawingCacheEnabled(true);
         //设置缓存模式
-        webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        webview.setWebChromeClient(new WVChromeClient());
-        webview.setWebViewClient(new WVClient());
+        webBinding.webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        webBinding.webview.setWebChromeClient(new WVChromeClient());
+        webBinding.webview.setWebViewClient(new WVClient());
 
     }
 
@@ -87,7 +79,7 @@ public class WEBActivity extends BaseActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
 
-            progress.setVisibility(GONE);
+            webBinding.progress.setVisibility(GONE);
             super.onPageFinished(view, url);
 
         }
@@ -103,11 +95,11 @@ public class WEBActivity extends BaseActivity {
 
 
             if (newProgress == 100) {
-                progress.setVisibility(GONE);
+                webBinding.progress.setVisibility(GONE);
             } else {
-                if (progress.getVisibility() == GONE)
-                    progress.setVisibility(VISIBLE);
-                progress.setProgress(newProgress);
+                if (webBinding.progress.getVisibility() == GONE)
+                    webBinding.progress.setVisibility(VISIBLE);
+                webBinding.progress.setProgress(newProgress);
             }
             super.onProgressChanged(view, newProgress);
         }
@@ -118,8 +110,8 @@ public class WEBActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (webview.canGoBack()) {
-                webview.goBack();
+            if (webBinding.webview.canGoBack()) {
+                webBinding.webview.goBack();
                 return true;
             } else {
                 finish();
