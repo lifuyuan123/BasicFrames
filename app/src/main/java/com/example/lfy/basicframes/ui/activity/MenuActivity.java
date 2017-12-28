@@ -73,7 +73,5 @@ public class MenuActivity extends BaseActivity {
         classList.add(SwipeDeleteActivity.class);
         list.add("权限试例");
         classList.add(PermissionsActivity.class);
-        list.add("databinding 测试");
-        classList.add(DataBindingActivity.class);
     }
 }

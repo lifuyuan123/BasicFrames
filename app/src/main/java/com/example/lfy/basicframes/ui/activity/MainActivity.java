@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.IdRes;
@@ -17,8 +18,10 @@ import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,14 +35,13 @@ import com.example.lfy.basicframes.ui.fragment.IosFragment;
 import com.example.lfy.basicframes.ui.fragment.VideoFragment;
 import com.example.lfy.basicframes.ui.fragment.WelfareFragment;
 import com.example.lfy.basicframes.utill.EasyPermissionsEx;
+import com.example.lfy.basicframes.utill.StatusBarUtil;
 import com.example.lfy.basicframes.utill.StatusBarUtils;
 import com.example.lfy.basicframes.utill.ToastUtils;
+import com.example.lfy.basicframes.view.TitleBar;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
-//    @BindView(R.id.viewpager)
-//    ViewPager viewpager;
-//    private MyPagerAdapter adapter;
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private Fragment fragment;
@@ -57,27 +59,34 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         mainBinding=DataBindingUtil.setContentView(this,R.layout.activity_main);
         //获取fragment管理类
         fragmentManager=getSupportFragmentManager();
         mainBinding.titleBarMain.setLeftImageResource(R.drawable.menu);
-        mainBinding.titleBarMain.setLeftLayoutClickListener(new View.OnClickListener() {
+        mainBinding.titleBarMain.setTitle("加载动画");
+        mainBinding.titleBarMain.setBackgroundColor(Color.parseColor("#aa3e6456"));
+        mainBinding.titleBarMain.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, MenuActivity.class));
+                finish();
+            }
+        });
+        mainBinding.titleBarMain.setDividerColor(Color.GRAY);//下划线
+        mainBinding.titleBarMain.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainBinding.slidingview.toggleMenu();
+//                startActivity(new Intent(MainActivity.this, MenuActivity.class));
             }
         });
 
-        mainBinding.titleBarMain.setRightImageResource(R.drawable.menu);
-        mainBinding.titleBarMain.setRightLayoutClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               ToastUtils.showShort("点击了右边");
-            }
-        });
 
         //状态栏相关
-        StatusBarUtils.setColorNoTranslucent(this, Color.parseColor("#aa3e6456"));
+//        StatusBarUtils.setColorNoTranslucent(this, Color.parseColor("#aa3e6456"));
+        StatusBarUtil.darkMode(this);
+        mainBinding.titleBarMain.setImmersive(true);
 
         mainBinding.rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -107,18 +116,17 @@ public class MainActivity extends BaseActivity {
 
         //添加fragment和radiobutton
         initView();
-
-//        adapter = new MyPagerAdapter(getSupportFragmentManager());
-//        viewpager.setAdapter(adapter);
-//        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            public void onPageSelected(int position) {
-//                rgMain.getChildAt(position).performClick();
-//            }
-//            public void onPageScrolled(int arg0, float arg1, int arg2) {
-//
-//            }
-//            public void onPageScrollStateChanged(int arg0) {
-//
+        mainBinding.rl1.setOnClickListener(this);
+        mainBinding.rl2.setOnClickListener(this);
+        mainBinding.rl3.setOnClickListener(this);
+        mainBinding.rl4.setOnClickListener(this);
+        mainBinding.rl5.setOnClickListener(this);
+        mainBinding.content.setOnClickListener(this);
+//        mainBinding.content.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                mainBinding.slidingview.closeMenu();
+//                return true;
 //            }
 //        });
 
@@ -154,15 +162,22 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            firstTime = System.currentTimeMillis();
-            spaceTime = firstTime - secondTime;
-            secondTime = firstTime;
-            if (spaceTime > 2000) {
-                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            } else
-                MainActivity.this.finish();
+
+        //判断是否打开菜单
+        if(mainBinding.slidingview.isMenuOpened){
+         mainBinding.slidingview.closeMenu();
+        }else {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                firstTime = System.currentTimeMillis();
+                spaceTime = firstTime - secondTime;
+                secondTime = firstTime;
+                if (spaceTime > 2000) {
+                    Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                } else
+                    MainActivity.this.finish();
+            }
         }
+
         return true;
     }
 
@@ -176,20 +191,29 @@ public class MainActivity extends BaseActivity {
     }
 
 
-//    class MyPagerAdapter extends FragmentPagerAdapter {
-//
-//        public MyPagerAdapter(FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        public Fragment getItem(int arg0) {
-//            return fragments[arg0];
-//        }
-//
-//        public int getCount() {
-//            return fragments.length;
-//        }
-//    }
+    //点击事件
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+            case R.id.rl_1://banner图
+                startActivity(BannerActivity.class,false);
+                break;
+            case R.id.rl_2://拖拽删除
+                startActivity(SwipeDeleteActivity.class,false);
+                break;
+            case R.id.rl_3://权限测试
+                startActivity(PermissionsActivity.class,false);
+                break;
+            case R.id.rl_4:
+                break;
+            case R.id.rl_5:
+                break;
+        }
+
+    }
+
+
 
 
 

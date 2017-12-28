@@ -1,5 +1,6 @@
 package com.example.lfy.basicframes.ui.base;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,13 +42,6 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackHelpe
         //初始化订阅者
         subscriber=Subscriber.getInstemce();
 
-
-
-//        mHelper = new SwipeBackActivityHelper(this);
-//        mHelper.onActivityCreate();
-//        mSwipeBackLayout = getSwipeBackLayout();
-//        //设置滑动方向，可设置EDGE_LEFT, EDGE_RIGHT, EDGE_ALL, EDGE_BOTTOM
-//        mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 
     }
 
@@ -121,33 +115,13 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackHelpe
         mSwipeBackHelper.backward();
     }
 
-//    @Override
-//    protected void onPostCreate(Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//        mHelper.onPostCreate();
-//    }
-//
-//    @Override
-//    public View findViewById(int id) {
-//        View v = super.findViewById(id);
-//        if (v == null && mHelper != null)
-//            return mHelper.findViewById(id);
-//        return v;
-//    }
-//
-//    @Override
-//    public SwipeBackLayout getSwipeBackLayout() {
-//        return mHelper.getSwipeBackLayout();
-//    }
-//
-//    @Override
-//    public void setSwipeBackEnable(boolean enable) {
-//        getSwipeBackLayout().setEnableGesture(enable);
-//    }
-//
-//    @Override
-//    public void scrollToFinishActivity() {
-//        Utils.convertActivityToTranslucent(this);
-//        getSwipeBackLayout().scrollToFinishActivity();
-//    }
+
+    //跳转
+    protected void startActivity(Class clazz,boolean isFinish) {
+                startActivity(new Intent(this,clazz));
+                if (isFinish) {
+                        finish();
+                    }
+            }
+
 }

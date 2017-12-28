@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.adapter.touchHelper.ItemTouchHelperAdapter;
 import com.example.lfy.basicframes.entity.NormalModel;
-import com.example.lfy.basicframes.view.SwipeBackActivity.BGASwipeItemLayout;
+import com.example.lfy.basicframes.view.swipeBackActivity.BGASwipeItemLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;

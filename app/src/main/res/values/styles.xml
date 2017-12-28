@@ -22,6 +22,8 @@
 
     <!--我的主题-->
     <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="background">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
         <item name="android:configChanges">keyboardHidden|orientation|screenSize</item>
         <item name="android:screenOrientation">portrait</item>//竖屏
         <item name="android:windowAnimationStyle">@style/AnimFade</item>

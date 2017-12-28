@@ -1,50 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout  xmlns:app="http://schemas.android.com/apk/res-auto">
     <data></data>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
 
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context="com.example.lfy.basicframes.ui.activity.MainActivity">
 
-    <com.example.lfy.basicframes.view.TitleBar
-        app:titleBarTitle="main"
-        app:titleBarBackground="#aa3e6456"
-        android:id="@+id/title_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </com.example.lfy.basicframes.view.TitleBar>
+        <com.example.lfy.basicframes.view.drawerlayout.SlidingView
+            android:id="@+id/slidingview"
+            app:menu_right_padding="60dp"
+            android:background="@drawable/dayu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <!--<android.support.v4.view.ViewPager-->
-    <!--android:layout_weight="1"-->
-    <!--android:id="@+id/viewpager"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"/>-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!--<include layout="@layout/left_menu_layout"/>-->
 
-    <FrameLayout
-        android:id="@+id/frame_main"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-    </FrameLayout>
 
-    <TextView
-        android:background="#dfdede"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    <RadioGroup
-        android:id="@+id/rg_main"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#ffffff"
-        android:gravity="center"
-        android:orientation="horizontal">
-    </RadioGroup>
-    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/rl_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/img1"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:src="@drawable/img_1"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@id/img1"
+                                android:text="banner图列表"
+                                android:textColor="#ffffff"
+                                android:textSize="18sp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp">
+
+                            <ImageView
+                                android:id="@+id/img2"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:src="@drawable/img_2"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@id/img2"
+                                android:text="侧滑删除与拖拽"
+                                android:textColor="#ffffff"
+                                android:textSize="18sp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp">
+
+                            <ImageView
+                                android:id="@+id/img3"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:src="@drawable/img_3"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@id/img3"
+                                android:text="权限试例"
+                                android:textColor="#ffffff"
+                                android:textSize="18sp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp">
+
+                            <ImageView
+                                android:id="@+id/img4"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:src="@drawable/img_4"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:text="菜单四"
+                                android:textColor="#ffffff"
+                                android:textSize="18sp"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@+id/img4"
+                                android:layout_marginStart="15dp" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp">
+
+                            <ImageView
+                                android:id="@+id/img5"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:src="@drawable/img_5"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@id/img5"
+                                android:text="菜单五"
+                                android:textColor="#ffffff"
+                                android:textSize="18sp"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.example.lfy.basicframes.view.titleBar.TitleBar
+                        app:titleBarTitle="main"
+                        app:titleBarBackground="#aa3e6456"
+                        app:titleBarTitleColor="@color/colorBack"
+                        app:titleBarLeftImage="@drawable/im_back"
+                        android:id="@+id/title_bar_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </com.example.lfy.basicframes.view.titleBar.TitleBar>
+
+                    <FrameLayout
+                        android:id="@+id/frame_main"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp">
+                    </FrameLayout>
+
+                    <TextView
+                        android:background="#dfdede"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="#ffffff"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                    </RadioGroup>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </com.example.lfy.basicframes.view.drawerlayout.SlidingView>
+    </RelativeLayout>
 
 </layout>
 

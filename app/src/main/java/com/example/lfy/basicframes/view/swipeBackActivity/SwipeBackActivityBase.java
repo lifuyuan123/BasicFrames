@@ -1,4 +1,4 @@
-package com.example.lfy.basicframes.view.SwipeBackActivity;
+package com.example.lfy.basicframes.view.swipeBackActivity;
 
 public interface SwipeBackActivityBase {
     /**

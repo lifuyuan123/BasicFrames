@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.lfy.basicframes.view.SwipeBackActivity.BGASwipeItemLayout
+<com.example.lfy.basicframes.view.swipeBackActivity.BGASwipeItemLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sil_item_bgaswipe_root"
@@ -61,4 +61,4 @@
             android:textSize="@dimen/textSize_14"/>
     </RelativeLayout>
 
-</com.example.lfy.basicframes.view.SwipeBackActivity.BGASwipeItemLayout>
+</com.example.lfy.basicframes.view.swipeBackActivity.BGASwipeItemLayout>

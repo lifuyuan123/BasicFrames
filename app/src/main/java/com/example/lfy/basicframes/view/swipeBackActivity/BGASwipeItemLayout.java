@@ -1,4 +1,4 @@
-package com.example.lfy.basicframes.view.SwipeBackActivity;
+package com.example.lfy.basicframes.view.swipeBackActivity;
 
 import android.content.Context;
 import android.content.res.TypedArray;

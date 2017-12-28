@@ -1,4 +1,4 @@
-package com.example.lfy.basicframes.view.SwipeBackActivity;
+package com.example.lfy.basicframes.view.swipeBackActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 
 
 import com.example.lfy.basicframes.R;
-import com.example.lfy.basicframes.utill.StatusBarUtils;
 
 import java.util.ArrayList;
 import java.util.List;

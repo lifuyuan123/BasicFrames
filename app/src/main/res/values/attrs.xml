@@ -50,4 +50,27 @@
         <attr name="bga_sil_springDistance" format="dimension" />
         <attr name="bga_sil_swipeAble" format="boolean" />
     </declare-styleable>
+
+     <!--侧滑目录-->
+    <declare-styleable name="SlidingView">
+        <attr name="menu_right_padding" format="dimension"/><!--菜单与右边的padding值-->
+    </declare-styleable>
+
+
+    <!--侧滑菜单的属性-->
+    <declare-styleable name="SlideMenuLayout">
+        <attr format="enum" name="slideMode">
+            <enum name="left" value="1001"/>
+            <enum name="right" value="1002"/>
+            <enum name="both" value="1003"/>
+            <enum name="none" value="1004"/>
+        </attr>
+        <attr format="dimension" name="slidePadding"/>
+        <attr format="integer" name="slideTime"/>
+        <attr format="boolean" name="parallax"/>
+        <attr format="float" name="contentAlpha"/>
+        <attr format="color" name="contentShadowColor"/>
+        <attr format="boolean" name="contentToggle"/>
+        <attr format="boolean" name="allowDragging"/>
+    </declare-styleable>
 </resources>
