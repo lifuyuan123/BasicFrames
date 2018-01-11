@@ -5,11 +5,15 @@
       <variable
           name="test"
           type="com.example.lfy.basicframes.entity.TestBean"/>
+
+       <!--在activity中绑定点击事件-->
+      <variable
+          name="onclick"
+          type="com.example.lfy.basicframes.ui.activity.DataBinDingTestActivity"/>
   </data>
 
 
     <LinearLayout
-
         android:gravity="center_horizontal"
         tools:context="com.example.lfy.basicframes.ui.activity.DataBinDingTestActivity"
         xmlns:tools="http://schemas.android.com/tools"
@@ -17,15 +21,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--onClick  绑定点击事件-->
         <TextView
+            android:id="@+id/tv_name"
+            android:onClick="@{onclick.onClick}"
             android:textSize="16sp"
             android:layout_marginTop="20dp"
             android:text="@{test.name}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:onClick="@{onclick.onClick}"
             android:id="@+id/tv_age"
-
             android:textSize="14sp"
             android:layout_marginTop="10dp"
             android:text="@{String.valueOf(test.age)}"

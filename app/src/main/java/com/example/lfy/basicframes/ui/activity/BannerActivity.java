@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.databinding.ActivityBannerBinding;
@@ -16,14 +15,12 @@ import com.example.lfy.basicframes.utill.LogUtil;
 import com.example.lfy.basicframes.utill.StatusBarUtils;
 import com.example.lfy.basicframes.utill.ToastUtils;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
 import cn.bingoogolapple.bgabanner.BGABanner;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 public class BannerActivity extends BaseActivity implements BGABanner.Delegate<ImageView, String>, BGABanner.Adapter<ImageView, String> {
 
 
