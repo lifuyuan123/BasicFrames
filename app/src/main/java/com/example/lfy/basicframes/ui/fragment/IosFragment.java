@@ -103,7 +103,8 @@ public class IosFragment extends Fragment {
             @Override
             protected void bindViewItemData(ViewDataBinding binding, int position, final IosBean.ResultsBean iosBean) {
                 IosItemBinding itemBinding = (IosItemBinding) binding;
-                itemBinding.tvName.setText(iosBean.getDesc());
+//                itemBinding.tvName.setText(iosBean.getDesc());
+                itemBinding.setIos(iosBean);
                 itemBinding.tvUrl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

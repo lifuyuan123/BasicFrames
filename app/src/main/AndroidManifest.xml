@@ -63,7 +63,8 @@
         <activity android:name=".ui.activity.MenuActivity" />
         <activity android:name=".ui.activity.PermissionsActivity" />
         <activity android:name=".ui.activity.DataBindingActivity" />
-        <activity android:name=".ui.activity.TestActivity"></activity>
+        <activity android:name=".ui.activity.TestActivity" />
+        <activity android:name=".ui.activity.DataBinDingTestActivity"></activity>
     </application>
 
 </manifest>

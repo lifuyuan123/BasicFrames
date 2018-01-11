@@ -1,5 +1,11 @@
 package com.example.lfy.basicframes.entity;
 
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.example.lfy.basicframes.R;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -58,6 +64,16 @@ public class GankBean implements Serializable{
         private String url;
         private boolean used;
         private String who;
+
+        //图片加载 "bind:userface"    去掉"bind:"编译就不会警告
+        @BindingAdapter("userface")
+        public static void getInternetImage(ImageView iv, String userface) {
+            Glide.with(iv.getContext())
+                    .load(userface)
+                    .error(R.drawable.icon_empty)
+                    .placeholder(R.mipmap.dayu)
+                    .into(iv);
+        }
 
         public String get_id() {
             return _id;

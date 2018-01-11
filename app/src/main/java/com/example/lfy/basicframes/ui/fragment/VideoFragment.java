@@ -100,7 +100,8 @@ public class VideoFragment extends Fragment {
             @Override
             protected void bindViewItemData(ViewDataBinding binding, int position, final RestBean.ResultsBean resultsBean) {
                 RestItemBinding itemBinding = (RestItemBinding) binding;
-                itemBinding.tvName.setText(resultsBean.getDesc());
+//                itemBinding.tvName.setText(resultsBean.getDesc());
+                itemBinding.setVedio(resultsBean);
                 itemBinding.tvUrl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

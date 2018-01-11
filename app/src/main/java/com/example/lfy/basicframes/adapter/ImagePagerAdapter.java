@@ -6,13 +6,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-
+import android.widget.LinearLayout;
+import com.bumptech.glide.Glide;
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.entity.GankBean;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +35,15 @@ public class ImagePagerAdapter extends PagerAdapter {
 
     private void init(List<GankBean.ResultsBean> beanList) {
         for (GankBean.ResultsBean s : beanList) {
-            PhotoView imageView = (PhotoView) LayoutInflater.from(context).inflate(R.layout.view_guide_image, null);
-            Picasso.with(context).load(s.getUrl()).into(imageView);
-            views.add(imageView);
+            LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.view_guide_image, null);
+            PhotoView imageView=linearLayout.findViewById(R.id.image);
+            Glide.with(context)
+                    .load(s.getUrl())
+                    .error(R.drawable.icon_error)
+                    .placeholder(R.mipmap.dayu)
+                    .into(imageView);
+
+            views.add(linearLayout);
         }
     }
 

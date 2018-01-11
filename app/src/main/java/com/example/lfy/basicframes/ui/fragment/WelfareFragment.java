@@ -7,33 +7,25 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.adapter.CommonAdapter;
-import com.example.lfy.basicframes.databinding.FragmentVedioBinding;
 import com.example.lfy.basicframes.databinding.FragmentWelfareBinding;
 import com.example.lfy.basicframes.databinding.GankItemBinding;
 import com.example.lfy.basicframes.entity.GankBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
 import com.example.lfy.basicframes.http.Subscriber;
 import com.example.lfy.basicframes.ui.activity.ImagePagerActivity;
-import com.example.lfy.basicframes.ui.base.BaseFragment;
 import com.example.lfy.basicframes.utill.LogUtil;
 import com.example.lfy.basicframes.utill.ToastUtils;
-import com.example.lfy.basicframes.view.EmptyLayout;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
-import com.squareup.picasso.Picasso;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -88,8 +80,11 @@ public class WelfareFragment extends Fragment {
                 }
                 itemBinding.cardView.setLayoutParams(params);
 
-                Picasso.with(getContext()).load(gankBean.getUrl()).into(itemBinding.ivCard);
-                itemBinding.tvTitle.setText(gankBean.getType());
+//                Picasso.with(getContext()).load(gankBean.getUrl()).into(itemBinding.ivCard);
+//                itemBinding.tvTitle.setText(gankBean.getType());
+                //使用databinding加载  只需要将实体类传进去
+                itemBinding.setGank(gankBean);
+
 
                 itemBinding.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override

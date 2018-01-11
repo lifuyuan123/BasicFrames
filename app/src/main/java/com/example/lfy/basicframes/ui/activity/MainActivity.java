@@ -205,7 +205,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.rl_3://权限测试
                 startActivity(PermissionsActivity.class,false);
                 break;
-            case R.id.rl_4:
+            case R.id.rl_4://databinding测试
+                startActivity(DataBinDingTestActivity.class,false);
                 break;
             case R.id.rl_5:
                 break;

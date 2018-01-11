@@ -224,23 +224,23 @@ public class SlidingView extends HorizontalScrollView {
 
         //对于menu，scale:从0.7~1.0，translate:从0.7~1.0，alpha:从0.7~1.0
 
-//        PropertyValuesHolder menuTrans = PropertyValuesHolder.ofFloat("translationX",l*(0.7f+0.3f*scale));
-//        PropertyValuesHolder menuScaleX = PropertyValuesHolder.ofFloat("scaleX",0.7f+0.3f*scale);
-//        PropertyValuesHolder menuScaleY = PropertyValuesHolder.ofFloat("scaleY",0.7f+0.3f*scale);
-//        PropertyValuesHolder menuAlpha = PropertyValuesHolder.ofFloat("alpha",0.6f+0.4f*scale);
-//        ObjectAnimator.ofPropertyValuesHolder(mMenuView,menuTrans,menuScaleX,menuScaleY,menuAlpha)
-//                .setDuration(0).start();
-//
-//
-//        //对于content，scale:从1.0~0.7
-//        mContentView.setPivotX(0);
-//        mContentView.setPivotY(mContentView.getHeight()/2);
-//
-//        PropertyValuesHolder contentScaleX = PropertyValuesHolder.ofFloat("scaleX",1.0f-0.3f*scale);
-//        PropertyValuesHolder contentScaleY = PropertyValuesHolder.ofFloat("scaleY",1.0f-0.3f*scale);
-//        ObjectAnimator.ofPropertyValuesHolder(mContentView,contentScaleX,contentScaleY)
-//                .setDuration(0).start();
+        PropertyValuesHolder menuTrans = PropertyValuesHolder.ofFloat("translationX",l*(0.7f+0.3f*scale));
+        PropertyValuesHolder menuScaleX = PropertyValuesHolder.ofFloat("scaleX",0.7f+0.3f*scale);
+        PropertyValuesHolder menuScaleY = PropertyValuesHolder.ofFloat("scaleY",0.7f+0.3f*scale);
+        PropertyValuesHolder menuAlpha = PropertyValuesHolder.ofFloat("alpha",0.6f+0.4f*scale);
+        ObjectAnimator.ofPropertyValuesHolder(mMenuView,menuTrans,menuScaleX,menuScaleY,menuAlpha)
+                .setDuration(0).start();
 
-        ObjectAnimator.ofFloat(mMenuView,"translationX",l*(0.7f+0.3f*scale)).setDuration(0).start();
+
+        //对于content，scale:从1.0~0.7
+        mContentView.setPivotX(0);
+        mContentView.setPivotY(mContentView.getHeight()/2);
+
+        PropertyValuesHolder contentScaleX = PropertyValuesHolder.ofFloat("scaleX",1.0f-0.3f*scale);
+        PropertyValuesHolder contentScaleY = PropertyValuesHolder.ofFloat("scaleY",1.0f-0.3f*scale);
+        ObjectAnimator.ofPropertyValuesHolder(mContentView,contentScaleX,contentScaleY)
+                .setDuration(0).start();
+
+//        ObjectAnimator.ofFloat(mMenuView,"translationX",l*(0.7f+0.3f*scale)).setDuration(0).start();
     }
 }

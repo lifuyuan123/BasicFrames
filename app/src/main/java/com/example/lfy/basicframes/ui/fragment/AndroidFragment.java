@@ -108,7 +108,8 @@ public class AndroidFragment extends Fragment {
             @Override
             protected void bindViewItemData(ViewDataBinding binding, int position, final AndroidBean.ResultsBean androidBean) {
                 AndroidItemBinding itemBinding = (AndroidItemBinding) binding;
-                itemBinding.tvName.setText(androidBean.getDesc());
+//                itemBinding.tvName.setText(androidBean.getDesc());
+                itemBinding.setBean(androidBean);
                 itemBinding.tvUrl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

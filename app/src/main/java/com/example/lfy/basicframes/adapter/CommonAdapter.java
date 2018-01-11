@@ -75,6 +75,8 @@ public  abstract class CommonAdapter<T> extends RecyclerView.Adapter<CommonAdapt
             binding= (ViewDataBinding) itemView.getTag();
         }
 
+
+
         @Override
         public void onClick(View view) {
             if (onItemClickListener!=null){

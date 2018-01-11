@@ -1,27 +1,21 @@
 package com.example.lfy.basicframes.ui.activity;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.lfy.basicframes.R;
 import com.example.lfy.basicframes.databinding.ActivityBannerBinding;
 import com.example.lfy.basicframes.entity.BannerModel;
-import com.example.lfy.basicframes.entity.RestBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
 import com.example.lfy.basicframes.http.apiServer;
 import com.example.lfy.basicframes.ui.base.BaseActivity;
 import com.example.lfy.basicframes.utill.LogUtil;
-import com.example.lfy.basicframes.utill.StatusBarUtil;
 import com.example.lfy.basicframes.utill.StatusBarUtils;
 import com.example.lfy.basicframes.utill.ToastUtils;
-import com.example.lfy.basicframes.view.TitleBar;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.squareup.picasso.Picasso;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 import io.reactivex.Observable;
@@ -127,14 +121,10 @@ public class BannerActivity extends BaseActivity implements BGABanner.Delegate<I
 
     @Override
     public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
-        Picasso.with(itemView.getContext())
+        Glide.with(itemView.getContext())
                 .load(model)
                 .placeholder(R.drawable.holder).error(R.drawable.holder)
                 .into(itemView);
 
-//        Glide.with(itemView.getContext())
-//                .load(model)
-//                .apply(new RequestOptions().placeholder(R.drawable.holder).error(R.drawable.holder).dontAnimate().centerCrop())
-//                .into(itemView);
     }
 }
