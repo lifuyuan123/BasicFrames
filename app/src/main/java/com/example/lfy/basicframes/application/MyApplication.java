@@ -3,6 +3,7 @@ package com.example.lfy.basicframes.application;
 import android.app.Application;
 import android.util.Log;
 
+import com.example.lfy.basicframes.utill.DensityHelper;
 import com.example.lfy.basicframes.utill.LogUtil;
 import com.example.lfy.basicframes.utill.Utils;
 import com.tencent.smtt.sdk.QbSdk;
@@ -48,6 +49,9 @@ public class MyApplication extends Application {
         BGASwipeBackHelper.init(this, null);
 
         LogUtil.closeOrOpenAll(true);//打开日志
+
+        //适配  750  设计的宽度
+        new DensityHelper(this, 750).activate();
 
     }
 }

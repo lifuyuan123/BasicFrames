@@ -208,7 +208,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.rl_4://databinding测试
                 startActivity(DataBinDingTestActivity.class,false);
                 break;
-            case R.id.rl_5:
+            case R.id.rl_5://适配
+                startActivity(AdaptationActivity.class,false);
                 break;
         }
 
