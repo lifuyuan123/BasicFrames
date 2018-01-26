@@ -353,18 +353,16 @@
 
 
         <TextView
-            android:id="@+id/tv_text"
             android:visibility="gone"
             android:layout_marginTop="12pt"
             android:layout_gravity="center_horizontal"
-            android:text="新增文字3000000000000"
+            android:text="新增文字3"
             android:textSize="30pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_marginBottom="50pt"
             android:visibility="gone"
             android:layout_marginTop="24pt"
             android:layout_gravity="center_horizontal"
