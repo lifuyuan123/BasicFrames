@@ -59,6 +59,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //如果有快捷方式图标
+        if (getIntent().getBooleanExtra("isture",false)){
+            Intent intent=new Intent(MainActivity.this,WebviewActivity.class);
+            intent.putExtra("url",getIntent().getStringExtra("url"));
+            startActivity(intent);
+        }
 
 
         mainBinding=DataBindingUtil.setContentView(this,R.layout.activity_main);
