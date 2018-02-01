@@ -20,7 +20,9 @@ import com.example.lfy.basicframes.entity.GankBean;
 import com.example.lfy.basicframes.http.ApiCallBack;
 import com.example.lfy.basicframes.http.Subscriber;
 import com.example.lfy.basicframes.ui.activity.ImagePagerActivity;
+import com.example.lfy.basicframes.utill.ACache;
 import com.example.lfy.basicframes.utill.LogUtil;
+import com.example.lfy.basicframes.utill.NetworkUtils;
 import com.example.lfy.basicframes.utill.ToastUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -46,6 +48,7 @@ public class WelfareFragment extends Fragment {
     private List<GankBean.ResultsBean> list = new ArrayList<>();
     private int page = 1;
     private FragmentWelfareBinding inflate;
+    private ACache cache = null;
 
 
     @Nullable
@@ -61,8 +64,6 @@ public class WelfareFragment extends Fragment {
         subscriber= Subscriber.getInstemce();
         manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         inflate.rvWelfare.setLayoutManager(manager);
-        //获取数据
-        getData(page);
         adapter = new CommonAdapter<GankBean.ResultsBean>(list, R.layout.gank_item) {
             @Override
             protected void bindViewItemData(ViewDataBinding binding, final int position, GankBean.ResultsBean gankBean) {
@@ -136,9 +137,9 @@ public class WelfareFragment extends Fragment {
             public void onClick(View view) {
                 ToastUtils.showShort("重新加载");
                 //触发自动刷新
-                inflate.freshWelfare.autoRefresh();
                 page=1;
-                getData(page);
+                inflate.freshWelfare.autoRefresh();
+
             }
         });
 
@@ -149,14 +150,34 @@ public class WelfareFragment extends Fragment {
 
 
     private void getData(final int page) {
+//        if (getActivity()!=null){
+//         cache=ACache.get(getActivity());
+//        }
+//
+//        if (!NetworkUtils.isConnected()&&((GankBean)(cache.getAsObject("data"))).getResults()!=null||!NetworkUtils.isAvailableByPing()){
+//
+//            if (page>1)
+//                return;
+//            list.addAll(((GankBean)(cache.getAsObject("data"))).getResults());
+//            Log.e("cache",((GankBean)(cache.getAsObject("data"))).getResults().toString()+"      "+cache.getAsObject("data").toString());
+//            adapter.notifyDataSetChanged();
+//            //关闭所有
+//            inflate.emptyLayout.showSuccess();
+//            return;
+//        }
 
-        subscriber.getGank(10 + "", page + "", "福利", new ApiCallBack<GankBean>() {
+        /**
+         * RxCache在取到未过期的缓存时,会根据这个boolean字段,考虑是否使用这个缓存,如果为true,
+         * 就会重新通过Retrofit获取新的数据,如果为false就会使用这个缓存
+         * */
+        subscriber.getGank(10 + "", page + "", "福利",false, new ApiCallBack<GankBean>() {
             @Override
             public void OnSuccess(GankBean value) {
                 Log.e("getDataOnSuccess", value.toString());
                 if (page == 1) {
                     list.clear();
                 }
+//                cache.put("data",value);
                 list.addAll(value.getResults());
                 adapter.notifyDataSetChanged();
                 //关闭所有

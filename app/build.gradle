@@ -25,8 +25,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         //只留主要的机型
-        ndk { abiFilters "armeabi", "x86", "armeabi-v7a" }
-        //, , "mips","armeabi-v7a"
+        ndk { abiFilters "armeabi", "armeabi-v7a" }
+        //, , "mips","armeabi-v7a", "x86"
 
         //只支持中文
         resConfigs "zh"
@@ -88,4 +88,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.aliyun.ams:alicloud-android-hotfix:3.2.0'
     testCompile 'junit:junit:4.12'
+    compile "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x"
+    compile 'com.github.VictorAlbertos.Jolyglot:gson:0.0.3'
 }

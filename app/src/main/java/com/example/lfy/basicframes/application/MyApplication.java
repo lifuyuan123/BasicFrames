@@ -3,6 +3,8 @@ package com.example.lfy.basicframes.application;
 import android.app.Application;
 import android.util.Log;
 
+import com.example.lfy.basicframes.http.ApiClient;
+import com.example.lfy.basicframes.http.Subscriber;
 import com.example.lfy.basicframes.utill.DensityHelper;
 import com.example.lfy.basicframes.utill.LogUtil;
 import com.example.lfy.basicframes.utill.Utils;
